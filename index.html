@@ -31,7 +31,7 @@ body.dark{
 button{-webkit-appearance:none;appearance:none;font-family:inherit}
 body{background:var(--bg);height:100vh;overflow:hidden;color:var(--text);transition:.2s}
 
-/* АВТОРИЗАЦИЯ */
+/* ===== АВТОРИЗАЦИЯ ===== */
 .auth-screen{position:fixed;inset:0;
   background:linear-gradient(135deg,#517da2 0%,#6ab3f3 100%);
   display:flex;align-items:center;justify-content:center;
@@ -74,14 +74,14 @@ body.dark .auth-screen{background:linear-gradient(135deg,#17212b 0%,#232e3c 100%
 .step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:.2s}
 .step-dot.active{background:var(--accent);width:22px;border-radius:4px}
 
-/* ПРИЛОЖЕНИЕ */
+/* ===== ПРИЛОЖЕНИЕ ===== */
 .app{display:none;height:100vh}
 .app.active{display:flex}
 .sidebar{width:380px;min-width:380px;background:var(--sidebar);
   border-right:1px solid var(--border);display:flex;
   flex-direction:column;height:100vh}
 .sidebar-header{display:flex;align-items:center;gap:8px;
-  padding:8px 10px;border-bottom:1px solid var(--border);height:60px;background:var(--header)}
+  padding:8px 10px;border-bottom:1px solid var(--border);height:56px;background:var(--header)}
 .sidebar-title{font-size:20px;font-weight:700;color:var(--blue);margin-right:auto}
 .icon-btn{width:40px;height:40px;border:none;background:transparent;
   border-radius:50%;cursor:pointer;display:flex;
@@ -117,58 +117,113 @@ body.dark .auth-screen{background:linear-gradient(135deg,#17212b 0%,#232e3c 100%
 .chat-time{font-size:12px;color:var(--text3);flex-shrink:0}
 .chat-preview{font-size:14px;color:var(--text2);margin-top:3px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .verified{width:16px;height:16px;flex-shrink:0}
+.verified{width:16px;height:16px;flex-shrink:0}
+  /* ===== ЧАТ ===== */
 .chat-area{flex:1;display:flex;flex-direction:column;height:100vh;
-  background:var(--bg3);
-  background-image:url("data:image/svg+xml,%3Csvg width='90' height='90' viewBox='0 0 90 90' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d3dbe0' fill-opacity='0.35'%3E%3Ccircle cx='20' cy='20' r='3'/%3E%3Ccircle cx='65' cy='65' r='2'/%3E%3Ccircle cx='45' cy='45' r='2.5'/%3E%3C/g%3E%3C/svg%3E")}
-.chat-header{display:flex;align-items:center;gap:12px;
-  padding:0 16px;background:var(--header);
-  border-bottom:1px solid var(--border);height:60px;position:relative}
-.chat-header .avatar{width:42px;height:42px;font-size:16px}
-.back-btn{display:none}
-.chat-header-info{flex:1;min-width:0;cursor:pointer}
-.chat-header-info .chat-name{font-size:16px}
-.chat-header-info .status{font-size:13px;color:var(--text2);margin-top:1px}
-.messages{flex:1;overflow-y:auto;padding:20px 8%;
+  background:#7d9c78;
+  background-image:
+    radial-gradient(circle at 20% 30%, #a8c090 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, #93b382 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, #8aa87a 0%, transparent 60%),
+    linear-gradient(135deg,#a4c391 0%,#7d9c78 50%,#94b383 100%);
+  position:relative}
+body.dark .chat-area{
+  background:#0e1621;
+  background-image:
+    radial-gradient(circle at 20% 30%, #1c2a3a 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, #16202c 0%, transparent 50%),
+    linear-gradient(135deg,#1b2735 0%,#0e1621 100%)}
+
+/* Шапка чата как в ТГ */
+.chat-header{position:absolute;top:0;left:0;right:0;
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;z-index:10;background:transparent}
+.tg-back{width:42px;height:42px;border-radius:50%;
+  background:var(--bg);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);flex-shrink:0;color:var(--text)}
+.tg-back svg{width:22px;height:22px;fill:currentColor}
+.tg-header-pill{flex:1;display:flex;align-items:center;gap:10px;
+  background:var(--bg);border-radius:24px;padding:5px 16px 5px 5px;
+  min-width:0;box-shadow:0 2px 6px rgba(0,0,0,.15);cursor:pointer;height:42px}
+.tg-header-pill .avatar{width:32px;height:32px;font-size:14px}
+.tg-header-pill .avatar svg{width:18px;height:18px}
+.tg-header-info{flex:1;min-width:0;text-align:left}
+.tg-header-info .name{font-size:15px;font-weight:600;color:var(--text);
+  display:flex;align-items:center;gap:4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tg-header-info .name .verified{width:14px;height:14px}
+.tg-header-info .sub{font-size:12px;color:var(--text2);margin-top:1px}
+.tg-header-actions{display:flex;gap:6px;flex-shrink:0}
+.tg-header-btn{width:42px;height:42px;border-radius:50%;
+  background:var(--bg);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);color:var(--text)}
+.tg-header-btn svg{width:20px;height:20px;fill:currentColor}
+
+/* Сообщения */
+.messages{flex:1;overflow-y:auto;padding:70px 12px 20px;
   display:flex;flex-direction:column;gap:6px}
-.msg{max-width:65%;padding:8px 14px;border-radius:14px;
+.msg{max-width:75%;padding:8px 14px;border-radius:16px;
   font-size:15px;line-height:1.4;word-wrap:break-word;
   position:relative;animation:msgIn .18s ease;
-  user-select:text;color:var(--text)}
+  user-select:text;color:#000}
 @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.msg.out{align-self:flex-end;background:var(--out);
-  border-bottom-right-radius:4px}
-body.dark .msg.out{color:#fff}
-.msg.in{align-self:flex-start;background:var(--in);
-  border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
-.msg .time{font-size:11px;color:var(--text3);float:right;
+.msg.out{align-self:flex-end;background:#effdde;
+  border-bottom-right-radius:6px}
+body.dark .msg.out{background:#2b5278;color:#fff}
+.msg.in{align-self:flex-start;background:#fff;
+  border-bottom-left-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+body.dark .msg.in{background:#182533;color:#fff}
+.msg .time{font-size:11px;color:#6c7883;float:right;
   margin:4px 0 0 8px;position:relative;top:2px}
+.msg.out .time{color:#6ba93a}
 body.dark .msg.out .time{color:#a8c3dc}
-.empty-chat{flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;color:#fff;
-  text-align:center;padding:20px}
-.empty-chat .empty-badge{background:rgba(0,0,0,.2);
-  padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:12px}
-.empty-chat h3{font-size:17px;font-weight:500;color:#fff}
-.input-area{display:flex;align-items:flex-end;gap:8px;
-  padding:10px 16px;background:var(--header);
-  border-top:1px solid var(--border)}
-.input-area textarea{flex:1;resize:none;border:none;outline:none;
-  font-size:15px;font-family:inherit;max-height:120px;
-  padding:10px 14px;background:var(--bg2);color:var(--text);
-  border-radius:20px;line-height:1.4}
-.input-area textarea::placeholder{color:var(--text3)}
-.send-btn{width:44px;height:44px;border-radius:50%;
-  background:var(--accent);border:none;cursor:pointer;
+.date-sep{align-self:center;background:rgba(0,0,0,.25);
+  color:#fff;font-size:12.5px;padding:5px 12px;border-radius:14px;margin:8px 0}
+
+/* Пустой чат как на скрине 3 */
+.empty-chat-card{position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(120,160,110,.55);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  padding:24px 26px;border-radius:16px;text-align:center;
+  color:#fff;max-width:340px;width:calc(100% - 60px);
+  box-shadow:0 6px 20px rgba(0,0,0,.15)}
+body.dark .empty-chat-card{background:rgba(30,45,60,.7)}
+.empty-chat-card h4{font-size:15px;font-weight:500;margin-bottom:6px}
+.empty-chat-card p{font-size:14px;opacity:.9;line-height:1.4;margin-bottom:14px}
+.empty-chat-card .sticker{width:110px;height:110px;margin:0 auto;
+  background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:60px}
+
+/* Поле ввода как в ТГ */
+.input-area{position:absolute;bottom:0;left:0;right:0;
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px 12px;background:transparent}
+.input-pill{flex:1;display:flex;align-items:center;gap:8px;
+  background:var(--bg);border-radius:24px;padding:6px 6px 6px 14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.input-pill textarea{flex:1;resize:none;border:none;outline:none;
+  font-size:15px;font-family:inherit;max-height:100px;
+  padding:8px 0;background:transparent;color:var(--text);line-height:1.4}
+.input-pill textarea::placeholder{color:var(--text3)}
+.input-icon{width:32px;height:32px;border:none;background:transparent;
+  cursor:pointer;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;color:var(--text2);flex-shrink:0}
+.input-icon:hover{background:var(--hover)}
+.input-icon svg{width:20px;height:20px;fill:currentColor}
+.mic-btn{width:44px;height:44px;border-radius:50%;
+  background:var(--blue);border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:.15s}
-.send-btn:hover{background:var(--accent2)}
-.send-btn svg{width:22px;height:22px;fill:#fff;margin-left:2px}
+  flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.mic-btn svg{width:22px;height:22px;fill:#fff}
+
 .no-chat{flex:1;display:flex;align-items:center;justify-content:center;
   color:#fff;font-size:15px}
 .no-chat .pill{background:rgba(0,0,0,.2);padding:8px 18px;border-radius:20px}
 
-/* МОДАЛКИ */
+/* ===== МОДАЛКИ ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);
   display:none;align-items:center;justify-content:center;
   z-index:2000;padding:16px}
@@ -194,38 +249,32 @@ body.dark .msg.out .time{color:#a8c3dc}
 .modal-status{font-size:13px;margin-top:10px;min-height:18px;text-align:center}
 .modal-status.ok{color:#4caf50}
 .modal-status.err{color:#e53935}
-
-/* ПРОФИЛЬ в стиле ТГ */
+  /* ===== ПРОФИЛЬ ===== */
 .tg-profile{background:var(--bg);border-radius:12px;width:400px;max-width:100%;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;color:var(--text)}
+  box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;color:var(--text);
+  max-height:90vh;overflow-y:auto}
 .tg-profile-top{padding:26px 16px 16px;text-align:center;position:relative;background:var(--bg)}
 .tg-profile-close{position:absolute;top:14px;right:14px;width:32px;height:32px;
   border:none;background:transparent;cursor:pointer;border-radius:50%;
   display:flex;align-items:center;justify-content:center;color:var(--text2)}
 .tg-profile-close:hover{background:var(--hover)}
 .tg-profile-close svg{width:20px;height:20px;fill:currentColor}
-.tg-profile-top .big-av{width:110px;height:110px;margin:0 auto;border-radius:50%;
+.tg-profile-top .big-av{width:120px;height:120px;margin:0 auto;border-radius:50%;
   background:var(--bg2);display:flex;align-items:center;justify-content:center;
-  color:var(--text2);font-weight:600;font-size:44px;overflow:hidden}
-.tg-profile-top .big-av svg{width:60px;height:60px;fill:var(--text2)}
+  color:var(--text2);overflow:hidden}
+.tg-profile-top .big-av svg{width:64px;height:64px;fill:var(--text2)}
 .tg-profile-top .big-av img{width:100%;height:100%;object-fit:cover}
 .tg-profile-top h2{font-size:22px;margin-top:16px;font-weight:600;
   display:flex;align-items:center;justify-content:center;gap:6px;color:var(--text)}
 .tg-profile-top .sub{color:var(--text2);font-size:14px;margin-top:4px}
 
 .tg-buttons{display:flex;gap:8px;padding:0 14px 14px}
-.tg-btn{flex:1;background:var(--bg2);border-radius:12px;padding:12px 6px;
-  display:flex;flex-direction:column;align-items:center;gap:6px;
+.tg-btn{flex:1;background:var(--bg2);border-radius:12px;padding:14px 6px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
   cursor:pointer;transition:.15s;border:none;color:var(--text);font-size:12px}
 .tg-btn:hover{background:var(--hover)}
 .tg-btn svg{width:24px;height:24px;fill:var(--text)}
 .tg-btn span{font-size:12px;color:var(--text)}
-
-.tg-music{margin:0 14px 12px;background:var(--bg2);border-radius:10px;
-  padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:13px;
-  color:var(--text2);white-space:nowrap;overflow:hidden}
-.tg-music svg{width:16px;height:16px;fill:var(--text2);flex-shrink:0}
-.tg-music .txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 .tg-info-card{margin:0 14px 14px;background:var(--card);border-radius:12px;overflow:hidden;
   box-shadow:0 1px 3px rgba(0,0,0,.05)}
@@ -234,16 +283,9 @@ body.dark .msg.out .time{color:#a8c3dc}
 .tg-info-row .main{font-size:16px;color:var(--text)}
 .tg-info-row .sub{font-size:13px;color:var(--text2);margin-top:2px}
 
-.tg-tabs{display:flex;gap:0;background:var(--bg2);border-radius:10px;
-  margin:0 14px 14px;padding:4px}
-.tg-tab{flex:1;padding:8px;text-align:center;font-size:14px;
-  border-radius:8px;cursor:pointer;color:var(--text2);border:none;background:none}
-.tg-tab.active{background:var(--bg);color:var(--blue);font-weight:600;
-  box-shadow:0 1px 3px rgba(0,0,0,.08)}
-
-/* МЕНЮ ЧАТА (правый верхний угол) */
-.dropdown{position:absolute;top:52px;right:8px;background:var(--bg);
-  border-radius:12px;padding:6px 0;min-width:200px;
+/* МЕНЮ ЧАТА (dropdown) */
+.dropdown{position:absolute;top:56px;right:10px;background:var(--bg);
+  border-radius:12px;padding:6px 0;min-width:210px;
   box-shadow:0 4px 20px rgba(0,0,0,.25);z-index:500;color:var(--text);
   display:none}
 .dropdown.show{display:block;animation:ddIn .15s ease}
@@ -255,7 +297,7 @@ body.dark .msg.out .time{color:#a8c3dc}
 .dropdown-item.danger{color:#e53935}
 .dropdown-item.danger svg{fill:#e53935}
 
-/* Меню профиля (настройки) */
+/* Меню burger */
 .menu{background:var(--bg);border-radius:12px;padding:8px 0;
   width:300px;max-width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);color:var(--text)}
 .menu-item{display:flex;align-items:center;gap:14px;
@@ -282,14 +324,12 @@ body.dark .msg.out .time{color:#a8c3dc}
   .app.chat-open .sidebar{display:none}
   .chat-area{display:none}
   .app.chat-open .chat-area{display:flex}
-  .back-btn{display:flex}
-  .messages{padding:16px 12px}
-  .msg{max-width:80%}
 }
 </style>
 </head>
 <body>
-  <div class="auth-screen" id="authScreen">
+
+<div class="auth-screen" id="authScreen">
   <div class="auth-box" id="authBox"></div>
 </div>
 
@@ -319,7 +359,7 @@ const VERIFIED_SVG=`<svg class="verified" viewBox="0 0 24 24"><circle cx="12" cy
 const USER_ICON=`<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
 const SAVED_ICON=`<svg viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 00-2 2v16l7-3 7 3V5a2 2 0 00-2-2z"/></svg>`;
 
-let state={user:null,chats:[],activeChatId:null,temp:{},searchQuery:'',theme:'light',profileTab:'publications'};
+let state={user:null,chats:[],activeChatId:null,temp:{},searchQuery:'',theme:'light'};
 const authBox=document.getElementById('authBox');
 const authScreen=document.getElementById('authScreen');
 const app=document.getElementById('app');
@@ -333,12 +373,19 @@ function load(){try{const r=localStorage.getItem('mtg_state');if(r)state=Object.
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function applyTheme(){document.body.classList.toggle('dark',state.theme==='dark')}
 
+function formatPhone(p){
+  const d=String(p).replace(/\D/g,'');
+  if(d.length===11&&d[0]==='7')return `+7 (${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7,9)}-${d.slice(9,11)}`;
+  if(d.length===10)return `+7 (${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6,8)}-${d.slice(8,10)}`;
+  return p;
+}
+
 window.addEventListener('load',()=>{
   load();applyTheme();
   if(state.user)showApp();else showStepPhone();
 });
 
-/* РЕГИСТРАЦИЯ */
+/* ===== РЕГИСТРАЦИЯ ===== */
 function stepsHtml(a){return `<div class="steps">${[1,2,3,4].map(i=>`<div class="step-dot ${i<=a?'active':''}"></div>`).join('')}</div>`}
 
 function showStepPhone(){
@@ -449,8 +496,7 @@ function showStepPhoto(){
       verified:false,
       bio:'',
       birthday:'',
-      id:Math.floor(100000000+Math.random()*900000000).toString(),
-      music:'Пальто - Как быть'
+      id:String(Math.floor(100000000+Math.random()*900000000))
     };
     state.chats=[{
       id:'saved_'+Date.now(),
@@ -460,17 +506,15 @@ function showStepPhoto(){
       messages:[],
       isSaved:true,
       verified:false,
-      isSystem:true,
       phone:'+7 (999) 000-00-00',
-      bio:'',
-      music:'UMA2RMAN band - Ночной дозор'
+      bio:''
     }];
     state.activeChatId=state.chats[0].id;
     save();showApp();
   };
   document.getElementById('btnBack').onclick=showStepName;
-}
-  /* ПРИЛОЖЕНИЕ */
+  }
+  /* ===== ПРИЛОЖЕНИЕ ===== */
 function showApp(){
   authScreen.style.display='none';
   app.classList.add('active');
@@ -514,20 +558,32 @@ function openChat(id){
 
 function renderChatArea(){
   const chat=state.chats.find(c=>c.id===state.activeChatId);
-  if(!chat){chatAreaEl.innerHTML=`<div class="no-chat"><div class="pill">Выберите чат</div></div>`;return}
+  if(!chat){
+    chatAreaEl.innerHTML=`<div class="no-chat"><div class="pill">Выберите чат</div></div>`;
+    return;
+  }
   const av=chat.photo
     ?`<div class="avatar"><img src="${chat.photo}"></div>`
     :`<div class="avatar">${chat.isSaved?SAVED_ICON:USER_ICON}</div>`;
   const b=chat.verified?VERIFIED_SVG:'';
   chatAreaEl.innerHTML=`
     <div class="chat-header">
-      <button class="icon-btn back-btn" id="backBtn"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
-      ${av}
-      <div class="chat-header-info" id="headerInfo">
-        <div class="chat-name">${esc(chat.name)} ${b}</div>
-        <div class="status">${chat.isSaved?'сохранённые сообщения':'был(а) недавно'}</div>
+      <button class="tg-back" id="backBtn">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      </button>
+      <div class="tg-header-pill" id="headerPill">
+        ${av}
+        <div class="tg-header-info">
+          <div class="name">${esc(chat.name)} ${b}</div>
+          <div class="sub">${chat.isSaved?'сохранённые сообщения':'был(а) недавно'}</div>
+        </div>
       </div>
-      <button class="icon-btn" id="chatMenuBtn"><svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></button>
+      <button class="tg-header-btn" id="chatSearchBtn">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14z"/></svg>
+      </button>
+      <button class="tg-header-btn" id="chatMenuBtn">
+        <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+      </button>
       <div class="dropdown" id="chatDropdown">
         <div class="dropdown-item" id="ddProfile"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Открыть профиль</div>
         <div class="dropdown-item" id="ddClear"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>Очистить историю</div>
@@ -536,20 +592,36 @@ function renderChatArea(){
     </div>
     <div class="messages" id="messagesBox"></div>
     <div class="input-area">
-      <textarea id="msgInput" placeholder="Написать сообщение..." rows="1"></textarea>
-      <button class="send-btn" id="sendBtn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+      <div class="input-pill">
+        <button class="input-icon" id="emojiBtn">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+        </button>
+        <textarea id="msgInput" placeholder="Сообщение" rows="1"></textarea>
+        <button class="input-icon" id="attachBtn">
+          <svg viewBox="0 0 24 24"><path d="M16.5 6v11.5a4 4 0 01-8 0V5a2.5 2.5 0 015 0v12a1 1 0 01-2 0V6H10v11a2.5 2.5 0 005 0V5a4 4 0 00-8 0v12.5a5.5 5.5 0 0011 0V6h-1.5z"/></svg>
+        </button>
+      </div>
+      <button class="mic-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
     </div>`;
   renderMessages(chat);
-  document.getElementById('backBtn').onclick=()=>app.classList.remove('chat-open');
-  document.getElementById('headerInfo').onclick=()=>showContactProfile(chat.id);
 
-  /* Меню чата */
+  document.getElementById('backBtn').onclick=()=>{
+    app.classList.remove('chat-open');
+    state.activeChatId=null;save();
+    renderChats();renderChatArea();
+  };
+  document.getElementById('headerPill').onclick=()=>showContactProfile(chat.id);
+
   const dd=document.getElementById('chatDropdown');
   document.getElementById('chatMenuBtn').onclick=e=>{
     e.stopPropagation();
     dd.classList.toggle('show');
   };
-  document.addEventListener('click',()=>dd.classList.remove('show'));
+  document.addEventListener('click',e=>{
+    if(!dd.contains(e.target))dd.classList.remove('show');
+  });
   document.getElementById('ddProfile').onclick=()=>{dd.classList.remove('show');showContactProfile(chat.id)};
   document.getElementById('ddClear').onclick=()=>{
     dd.classList.remove('show');
@@ -559,9 +631,9 @@ function renderChatArea(){
   };
   document.getElementById('ddClose').onclick=()=>{
     dd.classList.remove('show');
-    if(confirm('Выйти из чата? Он будет удалён из списка.')){
+    if(confirm('Выйти из чата? Он будет удалён.')){
       state.chats=state.chats.filter(c=>c.id!==chat.id);
-      state.activeChatId=state.chats[0]?.id||null;
+      state.activeChatId=null;
       save();
       app.classList.remove('chat-open');
       renderChats();renderChatArea();
@@ -577,30 +649,43 @@ function renderChatArea(){
   };
   sendBtn.onclick=send;
   input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});
-  input.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'});
+  input.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'});
   input.focus();
 }
 
 function renderMessages(chat){
   const box=document.getElementById('messagesBox');if(!box)return;
   if(!chat.messages.length){
-    box.innerHTML=`<div class="empty-chat"><div class="empty-badge">${chat.isSaved?'Только вы видите эти сообщения':'Нет сообщений'}</div><h3>${esc(chat.name)}</h3></div>`;
+    box.innerHTML=`<div class="empty-chat-card">
+      <h4>Здесь пока ничего нет...</h4>
+      <p>Отправьте сообщение или нажмите на приветствие ниже.</p>
+      <div class="sticker">🐕</div>
+    </div>`;
     return;
   }
-  box.innerHTML=chat.messages.map(m=>{
-    const t=new Date(m.ts).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
-    return `<div class="msg ${m.type}">${esc(m.text)}<span class="time">${t}</span></div>`;
-  }).join('');
+  let html='';
+  let lastDate='';
+  chat.messages.forEach(m=>{
+    const d=new Date(m.ts);
+    const dayKey=d.toDateString();
+    if(dayKey!==lastDate){
+      lastDate=dayKey;
+      const months=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+      html+=`<div class="date-sep">${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}</div>`;
+    }
+    const t=d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+    html+=`<div class="msg ${m.type}">${esc(m.text)}<span class="time">${t}</span></div>`;
+  });
+  box.innerHTML=html;
   box.scrollTop=box.scrollHeight;
 }
 
 document.getElementById('searchInput').addEventListener('input',e=>{state.searchQuery=e.target.value.trim();renderChats()});
 
-/* МОДАЛКИ */
 function closeOverlay(){overlay.classList.remove('active');overlayContent.innerHTML=''}
 overlay.onclick=e=>{if(e.target===overlay)closeOverlay()};
 
-/* МЕНЮ (burger) */
+/* ===== BURGER МЕНЮ ===== */
 document.getElementById('burgerBtn').onclick=showMenu;
 function showMenu(){
   overlayContent.innerHTML=`
@@ -614,7 +699,7 @@ function showMenu(){
   document.getElementById('mAdmin').onclick=showAdminLogin;
   document.getElementById('mLogout').onclick=()=>{if(confirm('Выйти?')){localStorage.clear();location.reload()}};
   }
-  /* МОЙ ПРОФИЛЬ (как на скрине 1) */
+ /* ===== МОЙ ПРОФИЛЬ (скрин 1, но без музыки и табов) ===== */
 function showMyProfile(){
   const u=state.user;
   const av=u.photo
@@ -633,21 +718,12 @@ function showMyProfile(){
         <button class="tg-btn" id="btnEdit"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span>Изменить</span></button>
         <button class="tg-btn" id="btnSettings"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg><span>Настройки</span></button>
       </div>
-      <div class="tg-music">
-        <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
-        <div class="txt">${esc(u.music||'—')}</div>
-      </div>
       <div class="tg-info-card">
-        <div class="tg-info-row"><div class="main">${esc(u.phone)}</div><div class="sub">Телефон</div></div>
+        <div class="tg-info-row"><div class="main">${esc(formatPhone(u.phone))}</div><div class="sub">Телефон</div></div>
         <div class="tg-info-row"><div class="main">${u.bio?esc(u.bio):'<span style="color:var(--text3)">Добавить</span>'}</div><div class="sub">О себе</div></div>
         <div class="tg-info-row"><div class="main">${esc(u.username)}</div><div class="sub">Имя пользователя</div></div>
         <div class="tg-info-row"><div class="main">${u.birthday?formatDate(u.birthday):'<span style="color:var(--text3)">Добавить</span>'}</div><div class="sub">День рождения</div></div>
         <div class="tg-info-row"><div class="main">${esc(u.id)}</div><div class="sub">ID</div></div>
-      </div>
-      <div class="tg-tabs">
-        <button class="tg-tab active">Публикации</button>
-        <button class="tg-tab">Архив</button>
-        <button class="tg-tab">Подарки</button>
       </div>
       <div style="padding:0 14px 14px"><button class="modal-btn secondary" id="closeProf2">Закрыть</button></div>
     </div>`;
@@ -669,7 +745,7 @@ function formatDate(d){
   return `${dt.getDate()} ${months[dt.getMonth()]}. ${dt.getFullYear()} (${age} лет)`;
 }
 
-/* КОНТАКТ (система / Избранное) как на скрине 2 */
+/* ===== КОНТАКТ (скрин 2 — Чат/Звук/Звонок/Видео, без музыки) ===== */
 function showContactProfile(chatId){
   const c=state.chats.find(x=>x.id===chatId);
   if(!c)return;
@@ -685,21 +761,18 @@ function showContactProfile(chatId){
         <h2>${esc(c.name)} ${b}</h2>
         <div class="sub">был(а) недавно</div>
       </div>
-      <div class="tg-buttons" style="gap:8px">
+      <div class="tg-buttons">
         <button class="tg-btn" id="cChat"><svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg><span>Чат</span></button>
         <button class="tg-btn"><svg viewBox="0 0 24 24"><path d="M12 22a2 2 0 002-2h-4a2 2 0 002 2zm6-6V11c0-3.07-1.64-5.64-4.5-6.32V4a1.5 1.5 0 00-3 0v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg><span>Звук</span></button>
         <button class="tg-btn"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.15 15.15 0 006.59 6.59l2.2-2.2a.99.99 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg><span>Звонок</span></button>
         <button class="tg-btn"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1v-3.5l4 4v-11l-4 4z"/></svg><span>Видео</span></button>
       </div>
-      <div class="tg-music">
-        <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
-        <div class="txt">${esc(c.music||'—')}</div>
-      </div>
       <div class="tg-info-card">
-        <div class="tg-info-row"><div class="main">${esc(c.phone||'+7 (937) 000-00-00')}</div><div class="sub">Телефон</div></div>
+        <div class="tg-info-row"><div class="main">${esc(c.phone||'+7 (937) 530-79-00')}</div><div class="sub">Телефон</div></div>
         <div class="tg-info-row"><div class="main">${c.bio?esc(c.bio):'<span style="color:var(--text3)">—</span>'}</div><div class="sub">О себе</div></div>
-        <div class="tg-info-row"><div class="main">${esc(c.username||'@system')}</div><div class="sub">Имя пользователя</div></div>
-        <div class="tg-info-row"><div class="main">${esc(c.id.toString().slice(-9))}</div><div class="sub">ID</div></div>
+        <div class="tg-info-row"><div class="main">${esc(c.username||'@smatwey')}</div><div class="sub">Имя пользователя</div></div>
+        <div class="tg-info-row"><div class="main">${esc(c.birthday?formatDate(c.birthday):'24 авг. 2000 (26 лет)')}</div><div class="sub">День рождения</div></div>
+        <div class="tg-info-row"><div class="main">${esc(String(c.id).replace(/\D/g,'').slice(-9)||'7759155690')}</div><div class="sub">ID</div></div>
       </div>
       <div style="padding:0 14px 14px"><button class="modal-btn secondary" id="closeProf2">Закрыть</button></div>
     </div>`;
@@ -709,7 +782,7 @@ function showContactProfile(chatId){
   document.getElementById('cChat').onclick=()=>{closeOverlay();openChat(chatId)};
 }
 
-/* РЕДАКТИРОВАНИЕ ПРОФИЛЯ */
+/* ===== РЕДАКТИРОВАНИЕ ===== */
 function showEditProfile(focus){
   const u=state.user;
   overlayContent.innerHTML=`
@@ -721,20 +794,16 @@ function showEditProfile(focus){
       <input type="text" id="edBio" value="${esc(u.bio||'')}" maxlength="70">
       <label>День рождения</label>
       <input type="date" id="edBday" value="${u.birthday||''}">
-      <label>Музыка</label>
-      <input type="text" id="edMusic" value="${esc(u.music||'')}" maxlength="80">
       <button class="modal-btn" id="edSave">Сохранить</button>
       <button class="modal-btn secondary" id="edCancel">Отмена</button>
       <div class="modal-status" id="edStatus"></div>
     </div>`;
-  const focusEl=focus==='name'?document.getElementById('edName'):null;
-  if(focusEl)focusEl.focus();
+  if(focus==='name')document.getElementById('edName').focus();
   document.getElementById('edCancel').onclick=closeOverlay;
   document.getElementById('edSave').onclick=()=>{
     state.user.name=document.getElementById('edName').value.trim()||state.user.name;
     state.user.bio=document.getElementById('edBio').value.trim();
     state.user.birthday=document.getElementById('edBday').value;
-    state.user.music=document.getElementById('edMusic').value.trim();
     save();
     const st=document.getElementById('edStatus');
     st.className='modal-status ok';st.textContent='✓ Сохранено';
@@ -743,7 +812,7 @@ function showEditProfile(focus){
   };
 }
 
-/* НАСТРОЙКИ */
+/* ===== НАСТРОЙКИ ===== */
 function showSettings(){
   const u=state.user;
   overlayContent.innerHTML=`
@@ -781,7 +850,48 @@ function showSettings(){
   };
 }
 
-/* АДМИН */
+/* ===== КНОПКА + (НОВЫЙ ЧАТ) ===== */
+document.getElementById('newChatBtn').onclick=showNewChat;
+function showNewChat(){
+  overlayContent.innerHTML=`
+    <div class="modal">
+      <h3>Новый чат</h3>
+      <label>Имя собеседника</label>
+      <input type="text" id="ncName" placeholder="Иван" maxlength="30">
+      <label>@username</label>
+      <input type="text" id="ncUser" placeholder="@ivan" maxlength="24">
+      <button class="modal-btn" id="ncCreate">Создать чат</button>
+      <button class="modal-btn secondary" id="ncCancel">Отмена</button>
+      <div class="modal-status" id="ncStatus"></div>
+    </div>`;
+  const inp=document.getElementById('ncName');inp.focus();
+  document.getElementById('ncCancel').onclick=closeOverlay;
+  const create=()=>{
+    const name=document.getElementById('ncName').value.trim();
+    let un=document.getElementById('ncUser').value.trim();
+    if(!name){alert('Введите имя');return}
+    if(!un)un='@user'+Math.floor(Math.random()*9999);
+    if(!un.startsWith('@'))un='@'+un.replace(/@/g,'');
+    const chat={
+      id:'chat_'+Date.now(),
+      name,username:un,photo:null,messages:[],
+      isSaved:false,verified:false,
+      phone:'+7 (999) '+Math.floor(100+Math.random()*899)+'-'+Math.floor(10+Math.random()*89)+'-'+Math.floor(10+Math.random()*89),
+      bio:'',
+      birthday:''
+    };
+    state.chats.push(chat);
+    state.activeChatId=chat.id;
+    save();closeOverlay();
+    app.classList.add('chat-open');
+    renderChats();renderChatArea();
+  };
+  document.getElementById('ncCreate').onclick=create;
+  document.getElementById('ncUser').addEventListener('keydown',e=>{if(e.key==='Enter')create()});
+  document.getElementById('ncName').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('ncUser').focus()});
+}
+
+/* ===== АДМИН ===== */
 function showAdminLogin(){
   overlayContent.innerHTML=`
     <div class="modal">
@@ -823,4 +933,4 @@ function showAdminPanel(){
 }
 </script>
 </body>
-</html>
+</html> 
