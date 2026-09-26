@@ -114,7 +114,8 @@ body.dark .auth-screen{background:linear-gradient(135deg,#17212b 0%,#232e3c 100%
 .chat-time{font-size:12px;color:var(--text3);flex-shrink:0}
 .chat-preview{font-size:14px;color:var(--text2);margin-top:3px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.verified{width:16px;height:16px;flex-shrink:0}
+.verified{width:16px;height:16px;flex-shrink:0;
+  vertical-align:middle;display:inline-block}
   /* ===== ЧАТ ===== */
 .chat-area{flex:1;display:flex;flex-direction:column;
   height:100vh;height:100dvh;
@@ -140,7 +141,7 @@ body.dark .chat-area{background:linear-gradient(135deg,#1b2735 0%,#0e1621 100%)}
 .tg-header-info .name{font-size:14.5px;font-weight:600;color:var(--text);
   display:flex;align-items:center;gap:4px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tg-header-info .name .verified{width:13px;height:13px}
+.tg-header-info .name .verified{width:15px;height:15px}
 .tg-header-info .sub{font-size:11.5px;color:var(--text2);margin-top:1px}
 .tg-header-btn{width:40px;height:40px;border-radius:50%;
   background:var(--bg);border:none;cursor:pointer;
@@ -201,18 +202,16 @@ body.dark .msg.in{background:#182533;color:#fff}
 .no-chat{flex:1;display:flex;align-items:center;justify-content:center;color:#fff}
 .no-chat .pill{background:rgba(0,0,0,.2);padding:8px 18px;border-radius:20px}
 
-/* ===== МОДАЛКИ (профиль растягивается на весь экран) ===== */
+/* ===== МОДАЛКИ ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);
-  display:none;align-items:stretch;justify-content:center;
+  display:none;align-items:center;justify-content:center;
   z-index:2000;padding:8px;box-sizing:border-box;
   padding-top:calc(8px + env(safe-area-inset-top,0px));
   padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
 .modal-overlay.active{display:flex}
 .modal{background:var(--bg);border-radius:14px;padding:22px;
-  width:100%;max-width:100%;flex:1;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
-  max-height:100%;overflow-y:auto;color:var(--text);box-sizing:border-box;
-  display:flex;flex-direction:column}
+  width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3);
+  max-height:100%;overflow-y:auto;color:var(--text);box-sizing:border-box}
 .modal h3{font-size:18px;margin-bottom:16px}
 .modal label{display:block;font-size:13px;color:var(--text2);
   margin-bottom:6px;margin-top:12px}
@@ -231,7 +230,7 @@ body.dark .msg.in{background:#182533;color:#fff}
 .modal-status.ok{color:#4caf50}
 .modal-status.err{color:#e53935}
 
-/* ===== ПРОФИЛЬ — на весь экран с отступами ===== */
+/* ===== ПРОФИЛЬ — на весь экран ===== */
 .tg-profile{background:var(--bg);border-radius:14px;
   width:100%;max-width:100%;flex:1;
   box-shadow:0 20px 60px rgba(0,0,0,.3);
@@ -253,7 +252,7 @@ body.dark .msg.in{background:#182533;color:#fff}
 .tg-profile-top h2{font-size:21px;margin-top:12px;font-weight:600;
   display:flex;align-items:center;justify-content:center;gap:6px;
   word-break:break-word}
-.tg-profile-top h2 .verified{width:18px;height:18px}
+.tg-profile-top h2 .verified{width:22px;height:22px;margin-bottom:2px}
 .tg-profile-top .sub{color:var(--text2);font-size:13.5px;margin-top:4px}
 
 .tg-buttons{display:flex;gap:6px;padding:0 10px 10px}
@@ -345,12 +344,14 @@ body.dark .msg.in{background:#182533;color:#fff}
 </div>
 
 <div class="modal-overlay" id="overlay"><div id="overlayContent"></div></div>
-  <script>
-const VERIFIED_SVG=`<svg class="verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1da1f2"/><path d="M9.6 16.6l-3.6-3.6 1.4-1.4 2.2 2.2 5.6-5.6 1.4 1.4z" fill="#fff"/></svg>`;
+<script>
+/* Верифицированная галочка в форме звезды-шестерёнки (как Telegram Premium) */
+const VERIFIED_SVG=`<svg class="verified" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.5l2.1 2.6 3.2-1 1 3.2 3.2 1-1 3.2 2.6 2.1-2.6 2.1 1 3.2-3.2 1-1 3.2-3.2-1-2.1 2.6-2.1-2.6-3.2 1-1-3.2-3.2-1 1-3.2L1.5 12l2.6-2.1-1-3.2 3.2-1 1-3.2 3.2 1z" fill="#1c93e3"/><path d="M10.6 15.9l-3.5-3.5 1.4-1.4 2.1 2.1 5.3-5.3 1.4 1.4-6.7 6.7z" fill="#ffffff"/></svg>`;
+
 const USER_ICON=`<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
 const SAVED_ICON=`<svg viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 00-2 2v16l7-3 7 3V5a2 2 0 00-2-2z"/></svg>`;
 
-const DATA_VERSION='v7';
+const DATA_VERSION='v8';
 const ADMIN_PASS='1019';
 
 let state={user:null,chats:[],activeChatId:null,temp:{},searchQuery:'',theme:'light'};
@@ -512,7 +513,7 @@ function showStepPhoto(){
   };
   document.getElementById('btnBack').onclick=showStepName;
 }
-                      function showApp(){
+ function showApp(){
   authScreen.style.display='none';
   app.classList.add('active');
   app.classList.remove('chat-open');
@@ -646,13 +647,11 @@ document.addEventListener('click',function(e){
     renderChats();renderChatArea();
     return;
   }
-  /* Тап по шапке чата (аватар+имя) → профиль контакта */
   if(e.target.closest('#headerPill')){
     const chat=state.chats.find(c=>c.id===state.activeChatId);
     if(chat)showContactProfile(chat.id);
     return;
   }
-  /* Кнопка ⋮ → меню (без "Открыть профиль") */
   if(e.target.closest('#chatMenuBtn')){
     e.stopPropagation();
     const dd=document.getElementById('chatDropdown');
@@ -709,7 +708,7 @@ document.addEventListener('input',e=>{
     e.target.style.height=Math.min(e.target.scrollHeight,100)+'px';
   }
 });
-    function showMenu(){
+ function showMenu(){
   overlayContent.innerHTML=`
     <div class="menu">
       <button class="menu-item" type="button" data-menu="profile"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Профиль</button>
@@ -727,7 +726,6 @@ document.addEventListener('click',e=>{
   if(a==='logout'){if(confirm('Выйти?')){localStorage.clear();location.reload()}}
 });
 
-/* МОЙ ПРОФИЛЬ */
 function showMyProfile(){
   const u=state.user;
   if(!u.id)u.id=genId();
@@ -787,7 +785,6 @@ function pickPhoto(){
   inp.click();
 }
 
-/* ПРОФИЛЬ КОНТАКТА (открывается тапом по шапке чата) */
 function showContactProfile(chatId){
   const c=state.chats.find(x=>x.id===chatId);
   if(!c)return;
@@ -960,4 +957,4 @@ function showAdminPanel(){
 }
 </script>
 </body>
-</html>
+</html> 
