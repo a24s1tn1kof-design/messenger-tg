@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>Telegram</title>
+<title>Zuno</title>
 <style>
 :root{
   --bg:#ffffff; --bg2:#f4f4f5; --bg3:#e6ebee; --bg4:#efeff4;
@@ -116,12 +116,15 @@ body.dark .auth-screen{background:linear-gradient(135deg,#17212b 0%,#232e3c 100%
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .verified{width:16px;height:16px;flex-shrink:0;
   vertical-align:middle;display:inline-block}
-  /* ===== ЧАТ ===== */
+/* ===== ЧАТ — как в Telegram ===== */
 .chat-area{flex:1;display:flex;flex-direction:column;
   height:100vh;height:100dvh;
   position:relative;overflow:hidden;
-  background:linear-gradient(135deg,#a4c391 0%,#7d9c78 50%,#94b383 100%)}
+  background:linear-gradient(135deg,#c7dcc0 0%,#8fb584 50%,#a4c391 100%)}
 body.dark .chat-area{background:linear-gradient(135deg,#1b2735 0%,#0e1621 100%)}
+.chat-area::before{content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='60' cy='40' r='4'/%3E%3Ccircle cx='100' cy='20' r='5'/%3E%3Ccircle cx='30' cy='70' r='5'/%3E%3Ccircle cx='90' cy='80' r='6'/%3E%3Ccircle cx='50' cy='100' r='4'/%3E%3Cpath d='M80 15l3 5 5 3-5 3-3 5-3-5-5-3 5-3z'/%3E%3Cpath d='M15 95l2 4 4 2-4 2-2 4-2-4-4-2 4-2z'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none}
 
 .chat-header{position:absolute;top:0;left:0;right:0;
   display:flex;align-items:center;gap:6px;
@@ -133,14 +136,15 @@ body.dark .chat-area{background:linear-gradient(135deg,#1b2735 0%,#0e1621 100%)}
   box-shadow:0 2px 6px rgba(0,0,0,.15);flex-shrink:0;color:var(--text)}
 .tg-back svg{width:20px;height:20px;fill:currentColor;pointer-events:none}
 
-/* Пилюля шапки — ВСЯ кликабельна */
 .tg-header-pill{flex:1;display:flex;align-items:center;gap:8px;
   background:var(--bg);border-radius:22px;padding:4px 12px 4px 4px;
   min-width:0;box-shadow:0 2px 6px rgba(0,0,0,.15);
   cursor:pointer;height:40px;pointer-events:auto;
-  -webkit-tap-highlight-color:transparent;user-select:none}
+  -webkit-tap-highlight-color:transparent;user-select:none;
+  transition:transform .1s}
 .tg-header-pill:active{transform:scale(.98)}
-.tg-header-pill .avatar{width:32px;height:32px;pointer-events:none}
+.tg-header-pill .avatar{width:32px;height:32px;pointer-events:none;
+  background:var(--bg2)}
 .tg-header-pill .avatar svg{width:18px;height:18px;pointer-events:none}
 .tg-header-pill .avatar img{pointer-events:none}
 .tg-header-info{flex:1;min-width:0;text-align:left;pointer-events:none}
@@ -180,7 +184,8 @@ body.dark .msg.in{background:#182533;color:#fff}
   background:rgba(120,160,110,.55);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   padding:22px;border-radius:16px;text-align:center;
-  color:#fff;max-width:300px;width:calc(100% - 40px);box-sizing:border-box}
+  color:#fff;max-width:300px;width:calc(100% - 40px);box-sizing:border-box;
+  z-index:5}
 .empty-chat-card h4{font-size:15px;font-weight:500;margin-bottom:6px}
 .empty-chat-card p{font-size:13.5px;opacity:.9;line-height:1.4;margin-bottom:12px}
 .empty-chat-card .sticker{width:100px;height:100px;margin:0 auto;
@@ -241,7 +246,20 @@ body.dark .msg.in{background:#182533;color:#fff}
 .modal-status.ok{color:#4caf50}
 .modal-status.err{color:#e53935}
 
-/* ===== ПРОФИЛЬ — ЖЁСТКО на весь экран ===== */
+/* Аватарка в модалке создания чата */
+.nc-photo{width:100px;height:100px;margin:0 auto 14px;
+  border-radius:50%;background:var(--bg2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;border:2px dashed var(--border)}
+.nc-photo:hover{border-color:var(--accent)}
+.nc-photo img{width:100%;height:100%;object-fit:cover}
+.nc-photo .cam{width:32px;height:32px;fill:var(--text3)}
+.nc-photo .badge{position:absolute;bottom:4px;right:4px;
+  width:28px;height:28px;border-radius:50%;background:var(--accent);
+  display:flex;align-items:center;justify-content:center;border:3px solid var(--bg)}
+.nc-photo .badge svg{width:13px;height:13px;fill:#fff}
+
+/* ===== ПРОФИЛЬ ===== */
 .tg-profile{background:var(--bg);
   position:fixed;inset:0;
   width:100%;height:100%;
@@ -288,7 +306,6 @@ body.dark .msg.in{background:#182533;color:#fff}
   word-break:break-word;overflow-wrap:break-word}
 .tg-info-row .sub{font-size:13px;color:var(--text2);margin-top:3px}
 
-/* ===== DROPDOWN ===== */
 .dropdown{position:absolute;
   top:calc(56px + env(safe-area-inset-top,0px));
   right:8px;background:var(--bg);
@@ -346,7 +363,7 @@ body.dark .msg.in{background:#182533;color:#fff}
       <button class="icon-btn" id="burgerBtn" type="button">
         <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
       </button>
-      <div class="sidebar-title">Telegram</div>
+      <div class="sidebar-title">Zuno</div>
       <button class="icon-btn" id="newChatBtn" type="button">
         <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       </button>
@@ -360,13 +377,13 @@ body.dark .msg.in{background:#182533;color:#fff}
 </div>
 
 <div class="modal-overlay" id="overlay"><div id="overlayContent"></div></div>
-<script>
+        <script>
 const VERIFIED_SVG=`<svg class="verified" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.5l2.1 2.6 3.2-1 1 3.2 3.2 1-1 3.2 2.6 2.1-2.6 2.1 1 3.2-3.2 1-1 3.2-3.2-1-2.1 2.6-2.1-2.6-3.2 1-1-3.2-3.2-1 1-3.2L1.5 12l2.6-2.1-1-3.2 3.2-1 1-3.2 3.2 1z" fill="#1c93e3"/><path d="M10.6 15.9l-3.5-3.5 1.4-1.4 2.1 2.1 5.3-5.3 1.4 1.4-6.7 6.7z" fill="#ffffff"/></svg>`;
 
 const USER_ICON=`<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
 const SAVED_ICON=`<svg viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 00-2 2v16l7-3 7 3V5a2 2 0 00-2-2z"/></svg>`;
 
-const DATA_VERSION='v10';
+const DATA_VERSION='v12';
 const ADMIN_PASS='1019';
 
 let state={user:null,chats:[],activeChatId:null,temp:{},searchQuery:'',theme:'light'};
@@ -399,11 +416,7 @@ function formatPhone(p){
 
 window.addEventListener('load',()=>{
   load();applyTheme();
-  if(state.user){
-    showApp();
-  }else{
-    showStepPhone();
-  }
+  if(state.user){showApp();}else{showStepPhone();}
 });
 
 function stepsHtml(a){return `<div class="steps">${[1,2,3,4].map(i=>`<div class="step-dot ${i<=a?'active':''}"></div>`).join('')}</div>`}
@@ -528,7 +541,7 @@ function showStepPhoto(){
   };
   document.getElementById('btnBack').onclick=showStepName;
 }
- function showApp(){
+          function showApp(){
   authScreen.style.display='none';
   app.classList.add('active');
   app.classList.remove('chat-open');
@@ -584,7 +597,7 @@ function renderChatArea(){
       <button class="tg-back" id="backBtn" type="button">
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
       </button>
-      <div class="tg-header-pill" id="headerPill" role="button">
+      <div class="tg-header-pill" id="headerPill">
         ${av}
         <div class="tg-header-info">
           <div class="name">${esc(chat.name)} ${b}</div>
@@ -598,6 +611,7 @@ function renderChatArea(){
         <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
       </button>
       <div class="dropdown" id="chatDropdown">
+        <div class="dropdown-item" data-act="editAvatar"><svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg>Изменить аватар</div>
         <div class="dropdown-item" data-act="clear"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>Очистить историю</div>
         <div class="dropdown-item danger" data-act="close"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>Выйти из чата</div>
       </div>
@@ -662,7 +676,6 @@ document.addEventListener('click',function(e){
     renderChats();renderChatArea();
     return;
   }
-  /* Тап по пилюле (аватар + имя + статус) → профиль */
   if(e.target.closest('#headerPill')){
     e.preventDefault();
     e.stopPropagation();
@@ -683,6 +696,9 @@ document.addEventListener('click',function(e){
     const act=di.dataset.act;
     const dd=document.getElementById('chatDropdown');
     if(dd)dd.classList.remove('show');
+    if(act==='editAvatar'){
+      pickChatAvatar(chat.id);
+    }
     if(act==='clear'){
       if(confirm('Очистить историю сообщений?')){
         chat.messages=[];save();renderMessages(chat);renderChats();
@@ -726,7 +742,26 @@ document.addEventListener('input',e=>{
     e.target.style.height=Math.min(e.target.scrollHeight,100)+'px';
   }
 });
-  function showMenu(){
+
+/* ===== ИЗМЕНИТЬ АВАТАРКУ ЧАТА ===== */
+function pickChatAvatar(chatId){
+  const chat=state.chats.find(c=>c.id===chatId);
+  if(!chat)return;
+  const inp=document.createElement('input');
+  inp.type='file';inp.accept='image/*';
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=ev=>{
+      chat.photo=ev.target.result;
+      save();renderChats();
+      if(state.activeChatId===chatId)renderChatArea();
+    };
+    r.readAsDataURL(f);
+  };
+  inp.click();
+          }
+          function showMenu(){
   overlayContent.innerHTML=`
     <div class="menu">
       <button class="menu-item" type="button" data-menu="profile"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Профиль</button>
@@ -820,9 +855,9 @@ function showContactProfile(chatId){
       </div>
       <div class="tg-buttons">
         <button class="tg-btn" id="cChatBtn" type="button"><svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg><span>Чат</span></button>
-        <button class="tg-btn" type="button"><svg viewBox="0 0 24 24"><path d="M12 22a2 2 0 002-2h-4a2 2 0 002 2zm6-6V11c0-3.07-1.64-5.64-4.5-6.32V4a1.5 1.5 0 00-3 0v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg><span>Звук</span></button>
-        <button class="tg-btn" type="button"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.15 15.15 0 006.59 6.59l2.2-2.2a.99.99 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg><span>Звонок</span></button>
-        <button class="tg-btn" type="button"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1v-3.5l4 4v-11l-4 4z"/></svg><span>Видео</span></button>
+        <button class="tg-btn" id="cAvatarBtn" type="button"><svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg><span>Аватар</span></button>
+        <button class="tg-btn" id="cCallBtn" type="button"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.15 15.15 0 006.59 6.59l2.2-2.2a.99.99 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg><span>Звонок</span></button>
+        <button class="tg-btn" id="cVideoBtn" type="button"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1v-3.5l4 4v-11l-4 4z"/></svg><span>Видео</span></button>
       </div>
       <div class="tg-info-card">
         <div class="tg-info-row"><div class="main">${esc(c.phone||'+7 (937) 530-79-00')}</div><div class="sub">Телефон</div></div>
@@ -836,6 +871,7 @@ function showContactProfile(chatId){
   document.getElementById('cClose').onclick=closeOverlay;
   document.getElementById('cClose2').onclick=closeOverlay;
   document.getElementById('cChatBtn').onclick=()=>{closeOverlay();openChat(chatId)};
+  document.getElementById('cAvatarBtn').onclick=()=>{closeOverlay();pickChatAvatar(chatId)};
 }
 
 function showEditProfile(){
@@ -896,10 +932,17 @@ function showSettings(){
   };
 }
 
+/* ===== НОВЫЙ ЧАТ с аватаркой ===== */
 function showNewChat(){
+  let ncPhoto=null;
   overlayContent.innerHTML=`
     <div class="modal">
       <h3>Новый чат</h3>
+      <div class="nc-photo" id="ncPhotoBox">
+        <svg class="cam" viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg>
+      </div>
+      <input type="file" id="ncPhotoInput" accept="image/*" style="display:none">
+      <div style="text-align:center;font-size:12px;color:var(--text3);margin-bottom:8px">Нажмите на круг, чтобы выбрать аватар</div>
       <label>Имя собеседника</label>
       <input type="text" id="ncName" placeholder="Иван" maxlength="30">
       <label>@username</label>
@@ -910,6 +953,18 @@ function showNewChat(){
   overlay.classList.add('active');
   const inp=document.getElementById('ncName');inp.focus();
   document.getElementById('ncCancel').onclick=closeOverlay;
+  const photoBox=document.getElementById('ncPhotoBox');
+  const photoInput=document.getElementById('ncPhotoInput');
+  photoBox.onclick=()=>photoInput.click();
+  photoInput.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=ev=>{
+      ncPhoto=ev.target.result;
+      photoBox.innerHTML=`<img src="${ncPhoto}"><div class="badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>`;
+    };
+    r.readAsDataURL(f);
+  };
   const create=()=>{
     const name=document.getElementById('ncName').value.trim();
     let un=document.getElementById('ncUser').value.trim();
@@ -918,7 +973,7 @@ function showNewChat(){
     if(!un.startsWith('@'))un='@'+un.replace(/@/g,'');
     const chat={
       id:'chat_'+Date.now()+Math.floor(Math.random()*1000),
-      name,username:un,photo:null,messages:[],
+      name,username:un,photo:ncPhoto,messages:[],
       isSaved:false,verified:false,
       phone:'+7 (937) '+Math.floor(100+Math.random()*899)+'-'+Math.floor(10+Math.random()*89)+'-'+Math.floor(10+Math.random()*89),
       bio:'',birthday:''
