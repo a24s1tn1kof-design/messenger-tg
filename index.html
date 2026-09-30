@@ -116,7 +116,7 @@ body.dark .auth-screen{background:linear-gradient(135deg,#17212b 0%,#232e3c 100%
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .verified{width:16px;height:16px;flex-shrink:0;
   vertical-align:middle;display:inline-block}
-/* ===== ЧАТ ===== */
+/* ЧАТ */
 .chat-area{flex:1;display:flex;flex-direction:column;
   height:100vh;height:100dvh;
   position:relative;overflow:hidden;
@@ -178,7 +178,6 @@ body.dark .msg.in{background:#182533;color:#fff}
 .date-sep{align-self:center;background:rgba(0,0,0,.25);
   color:#fff;font-size:12.5px;padding:5px 12px;border-radius:14px;margin:8px 0}
 
-/* ПОДАРОК В ЧАТЕ (карточка) */
 .msg.gift{align-self:center;background:transparent;max-width:92%;
   display:flex;flex-direction:column;align-items:center;padding:6px 0}
 .gift-card-msg{width:100%;max-width:300px;border-radius:20px;
@@ -246,7 +245,7 @@ body.dark .msg.in{background:#182533;color:#fff}
 .no-chat{flex:1;display:flex;align-items:center;justify-content:center;color:#fff}
 .no-chat .pill{background:rgba(0,0,0,.2);padding:8px 18px;border-radius:20px}
 
-/* ===== МОДАЛКИ ===== */
+/* МОДАЛКИ */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);
   display:none;z-index:2000;padding:0;box-sizing:border-box;overflow:hidden}
 .modal-overlay.active{display:block}
@@ -288,7 +287,6 @@ body.dark .msg.in{background:#182533;color:#fff}
   display:flex;align-items:center;justify-content:center;border:3px solid var(--bg)}
 .nc-photo .badge svg{width:13px;height:13px;fill:#fff}
 
-/* ПРОФИЛЬ */
 .tg-profile{background:var(--bg);
   position:fixed;inset:0;
   width:100%;height:100%;
@@ -298,12 +296,11 @@ body.dark .msg.in{background:#182533;color:#fff}
           calc(16px + env(safe-area-inset-bottom,0px)) 0;
   border-radius:0;z-index:2001}
 .tg-profile-top{padding:20px 16px 16px;text-align:center;position:relative}
-.tg-profile-close{position:absolute;top:12px;right:12px;width:32px;height:32px;
+.tg-profile-close{position:absolute;top:12px;right:12px;width:36px;height:36px;
   border:none;background:transparent;cursor:pointer;border-radius:50%;
   display:flex;align-items:center;justify-content:center;color:var(--text2);
-  z-index:10}
+  font-size:22px;z-index:10}
 .tg-profile-close:hover{background:var(--hover)}
-.tg-profile-close svg{width:20px;height:20px;fill:currentColor}
 .tg-profile-top .big-av{width:110px;height:110px;margin:0 auto;border-radius:50%;
   background:var(--bg2);display:flex;align-items:center;justify-content:center;
   color:var(--text2);overflow:hidden}
@@ -344,7 +341,6 @@ body.dark .msg.in{background:#182533;color:#fff}
 .tg-tab.active{background:var(--bg);color:var(--blue);font-weight:600;
   box-shadow:0 1px 3px rgba(0,0,0,.08)}
 
-/* Сетка подарков в выборе */
 .gifts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
 .gift-card{background:var(--bg2);border-radius:14px;padding:12px 6px;
   display:flex;flex-direction:column;align-items:center;gap:6px;
@@ -358,7 +354,6 @@ body.dark .msg.in{background:#182533;color:#fff}
   text-overflow:ellipsis;max-width:100%}
 .gift-card .gift-price{font-size:10.5px;color:var(--text3)}
 
-/* Подарки в профиле (мини-карточки с фоном) */
 .gifts-received{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
   padding:0 12px 12px}
 .gift-received{border-radius:14px;padding:12px 8px;
@@ -423,11 +418,11 @@ body.dark .msg.in{background:#182533;color:#fff}
 <div class="app" id="app">
   <div class="sidebar">
     <div class="sidebar-header">
-      <button class="icon-btn" id="burgerBtn" type="button">
+      <button class="icon-btn" id="burgerBtn" type="button" onclick="showMenu()">
         <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
       </button>
       <div class="sidebar-title">Zuno</div>
-      <button class="icon-btn" id="newChatBtn" type="button">
+      <button class="icon-btn" id="newChatBtn" type="button" onclick="showNewChat()">
         <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       </button>
     </div>
@@ -446,47 +441,20 @@ const VERIFIED_SVG=`<svg class="verified" viewBox="0 0 24 24" xmlns="http://www.
 const USER_ICON=`<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
 const SAVED_ICON=`<svg viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 00-2 2v16l7-3 7 3V5a2 2 0 00-2-2z"/></svg>`;
 
-const DATA_VERSION='v14';
+const DATA_VERSION='v15';
 const ADMIN_PASS='1019';
-
 const TW='https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/';
 
 const GIFTS=[
-  {id:'pepe', name:'Plush Pepe', model:'Cozy Galaxy', backdrop:'Electric Purple', symbol:'Dolphin', price:'25 ⭐',
-   img:TW+'1f438.png',
-   bg:'linear-gradient(160deg,#b07fd6 0%,#8a55b0 50%,#5e2f8a 100%)'},
-
-  {id:'heart', name:'Heart', model:'Romance', backdrop:'Soft Pink', symbol:'Heart', price:'15 ⭐',
-   img:TW+'2764.png',
-   bg:'linear-gradient(160deg,#ff8fb3 0%,#e64a7a 50%,#b02456 100%)'},
-
-  {id:'rose', name:'Rose', model:'Passion', backdrop:'Deep Red', symbol:'Rose', price:'20 ⭐',
-   img:TW+'1f339.png',
-   bg:'linear-gradient(160deg,#f0666b 0%,#c4323a 50%,#7a0e15 100%)'},
-
-  {id:'cake', name:'Cake', model:'Birthday', backdrop:'Cream', symbol:'Candle', price:'30 ⭐',
-   img:TW+'1f382.png',
-   bg:'linear-gradient(160deg,#ffe0a8 0%,#e0a86b 50%,#a06e30 100%)'},
-
-  {id:'rocket', name:'Rocket', model:'Cosmos', backdrop:'Deep Space', symbol:'Star', price:'50 ⭐',
-   img:TW+'1f680.png',
-   bg:'linear-gradient(160deg,#4a6cf7 0%,#1e2a78 50%,#0a0e3a 100%)'},
-
-  {id:'trophy', name:'Trophy', model:'Champion', backdrop:'Gold', symbol:'Cup', price:'100 ⭐',
-   img:TW+'1f3c6.png',
-   bg:'linear-gradient(160deg,#ffd97a 0%,#d4a017 50%,#8a5e0a 100%)'},
-
-  {id:'diamond', name:'Diamond', model:'Luxury', backdrop:'Ice Blue', symbol:'Crystal', price:'200 ⭐',
-   img:TW+'1f48e.png',
-   bg:'linear-gradient(160deg,#9be5ff 0%,#4aaee0 50%,#1a6fa3 100%)'},
-
-  {id:'crown', name:'Crown', model:'Royal', backdrop:'Imperial Gold', symbol:'Crown', price:'150 ⭐',
-   img:TW+'1f451.png',
-   bg:'linear-gradient(160deg,#e8c96a 0%,#a37a1e 50%,#5e4410 100%)'},
-
-  {id:'star', name:'Star', model:'Cosmic', backdrop:'Night Sky', symbol:'Star', price:'10 ⭐',
-   img:TW+'2b50.png',
-   bg:'linear-gradient(160deg,#8a7ce0 0%,#4a3a9e 50%,#221766 100%)'}
+  {id:'pepe',name:'Plush Pepe',model:'Cozy Galaxy',backdrop:'Electric Purple',symbol:'Dolphin',price:'25 ⭐',img:TW+'1f438.png',bg:'linear-gradient(160deg,#b07fd6 0%,#8a55b0 50%,#5e2f8a 100%)'},
+  {id:'heart',name:'Heart',model:'Romance',backdrop:'Soft Pink',symbol:'Heart',price:'15 ⭐',img:TW+'2764.png',bg:'linear-gradient(160deg,#ff8fb3 0%,#e64a7a 50%,#b02456 100%)'},
+  {id:'rose',name:'Rose',model:'Passion',backdrop:'Deep Red',symbol:'Rose',price:'20 ⭐',img:TW+'1f339.png',bg:'linear-gradient(160deg,#f0666b 0%,#c4323a 50%,#7a0e15 100%)'},
+  {id:'cake',name:'Cake',model:'Birthday',backdrop:'Cream',symbol:'Candle',price:'30 ⭐',img:TW+'1f382.png',bg:'linear-gradient(160deg,#ffe0a8 0%,#e0a86b 50%,#a06e30 100%)'},
+  {id:'rocket',name:'Rocket',model:'Cosmos',backdrop:'Deep Space',symbol:'Star',price:'50 ⭐',img:TW+'1f680.png',bg:'linear-gradient(160deg,#4a6cf7 0%,#1e2a78 50%,#0a0e3a 100%)'},
+  {id:'trophy',name:'Trophy',model:'Champion',backdrop:'Gold',symbol:'Cup',price:'100 ⭐',img:TW+'1f3c6.png',bg:'linear-gradient(160deg,#ffd97a 0%,#d4a017 50%,#8a5e0a 100%)'},
+  {id:'diamond',name:'Diamond',model:'Luxury',backdrop:'Ice Blue',symbol:'Crystal',price:'200 ⭐',img:TW+'1f48e.png',bg:'linear-gradient(160deg,#9be5ff 0%,#4aaee0 50%,#1a6fa3 100%)'},
+  {id:'crown',name:'Crown',model:'Royal',backdrop:'Imperial Gold',symbol:'Crown',price:'150 ⭐',img:TW+'1f451.png',bg:'linear-gradient(160deg,#e8c96a 0%,#a37a1e 50%,#5e4410 100%)'},
+  {id:'star',name:'Star',model:'Cosmic',backdrop:'Night Sky',symbol:'Star',price:'10 ⭐',img:TW+'2b50.png',bg:'linear-gradient(160deg,#8a7ce0 0%,#4a3a9e 50%,#221766 100%)'}
 ];
 
 let state={user:null,chats:[],activeChatId:null,temp:{},searchQuery:'',theme:'light'};
@@ -516,13 +484,38 @@ function formatPhone(p){
   if(d.length===10)return `+7 (${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6,8)}-${d.slice(8,10)}`;
   return p||'';
 }
+function closeOverlay(){overlay.classList.remove('active');overlayContent.innerHTML=''}
 
 window.addEventListener('load',()=>{
   load();applyTheme();
   if(state.user){showApp();}else{showStepPhone();}
 });
 
-function stepsHtml(a){return `<div class="steps">${[1,2,3,4].map(i=>`<div class="step-dot ${i<=a?'active':''}"></div>`).join('')}</div>`}
+document.addEventListener('keydown',e=>{
+  if(e.target&&e.target.id==='searchInput')return;
+  if(e.target&&e.target.id==='msgInput'&&e.key==='Enter'&&!e.shiftKey){
+    e.preventDefault();
+    sendCurrentMessage();
+  }
+});
+document.addEventListener('input',e=>{
+  if(e.target&&e.target.id==='msgInput'){
+    e.target.style.height='auto';
+    e.target.style.height=Math.min(e.target.scrollHeight,100)+'px';
+  }
+});
+
+function sendCurrentMessage(){
+  const chat=state.chats.find(c=>c.id===state.activeChatId);
+  if(!chat)return;
+  const input=document.getElementById('msgInput');
+  if(!input)return;
+  const text=input.value.trim();if(!text)return;
+  chat.messages.push({text,type:'out',ts:Date.now()});
+  input.value='';input.style.height='auto';
+  save();renderMessages(chat);renderChats();
+}
+window.sendCurrentMessage=sendCurrentMessage;
 
 function showStepPhone(){
   authBox.innerHTML=`
@@ -531,7 +524,7 @@ function showStepPhone(){
     <p>Введите номер для продолжения</p>
     <input class="auth-input" id="inpPhone" placeholder="+7 999 123 45 67" inputmode="tel">
     <button class="auth-btn" id="btnNext">Далее</button>
-    ${stepsHtml(1)}`;
+    <div class="steps"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>`;
   const inp=document.getElementById('inpPhone'),btn=document.getElementById('btnNext');
   const upd=()=>btn.disabled=inp.value.replace(/\D/g,'').length<10;
   inp.addEventListener('input',upd);upd();
@@ -549,7 +542,7 @@ function showStepCode(){
     <div class="auth-hint" style="text-align:center;margin-top:-4px">Подсказка: <b>12345</b></div>
     <button class="auth-btn" id="btnNext">Далее</button>
     <button class="auth-btn secondary" id="btnBack" style="margin-top:8px">Назад</button>
-    ${stepsHtml(2)}`;
+    <div class="steps"><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div>`;
   const inp=document.getElementById('inpCode'),btn=document.getElementById('btnNext');
   const upd=()=>btn.disabled=inp.value.length<5;
   inp.addEventListener('input',()=>{inp.value=inp.value.replace(/\D/g,'').slice(0,5);upd()});
@@ -572,7 +565,7 @@ function showStepName(){
     <div class="auth-hint" id="userHint">Латиница, цифры, _ , минимум 5 символов</div>
     <button class="auth-btn" id="btnNext">Далее</button>
     <button class="auth-btn secondary" id="btnBack" style="margin-top:8px">Назад</button>
-    ${stepsHtml(3)}`;
+    <div class="steps"><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot"></div></div>`;
   const inpName=document.getElementById('inpName');
   const inpUser=document.getElementById('inpUser');
   const hint=document.getElementById('userHint');
@@ -608,7 +601,7 @@ function showStepPhoto(){
     <input type="file" id="photoInput" accept="image/*" style="display:none">
     <button class="auth-btn" id="btnDone" style="margin-top:6px">Готово</button>
     <button class="auth-btn secondary" id="btnBack" style="margin-top:8px">Назад</button>
-    ${stepsHtml(4)}`;
+    <div class="steps"><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot active"></div></div>`;
   const box=document.getElementById('photoBox');
   const input=document.getElementById('photoInput');
   let photoData=null;
@@ -636,12 +629,13 @@ function showStepPhoto(){
   };
   document.getElementById('btnBack').onclick=showStepName;
 }
-  function showApp(){
+ function showApp(){
   authScreen.style.display='none';
   app.classList.add('active');
   app.classList.remove('chat-open');
   renderChats();renderChatArea();
 }
+window.showApp=showApp;
 
 function renderChats(){
   const q=state.searchQuery.toLowerCase();
@@ -660,7 +654,7 @@ function renderChats(){
       ?`<div class="avatar"><img src="${c.photo}"></div>`
       :`<div class="avatar">${c.isSaved?SAVED_ICON:USER_ICON}</div>`;
     const b=c.verified?VERIFIED_SVG:'';
-    return `<div class="chat-item ${c.id===state.activeChatId?'active':''}" data-id="${c.id}">
+    return `<div class="chat-item ${c.id===state.activeChatId?'active':''}" data-id="${c.id}" onclick="openChat('${c.id}')">
       ${av}
       <div class="chat-info">
         <div class="chat-name-row">
@@ -678,6 +672,7 @@ function openChat(id){
   app.classList.add('chat-open');
   renderChats();renderChatArea();
 }
+window.openChat=openChat;
 
 function renderChatArea(){
   const chat=state.chats.find(c=>c.id===state.activeChatId);
@@ -691,24 +686,24 @@ function renderChatArea(){
   const b=chat.verified?VERIFIED_SVG:'';
   chatAreaEl.innerHTML=`
     <div class="chat-header">
-      <button class="tg-back" id="backBtn" type="button">
+      <button class="tg-back" onclick="backToList()" type="button">
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
       </button>
-      <div class="tg-header-pill" id="headerPill">
+      <div class="tg-header-pill" onclick="openContactProfile()">
         ${av}
         <div class="tg-header-info">
           <div class="name">${esc(chat.name)} ${b}</div>
           <div class="sub">${chat.isSaved?'сохранённые сообщения':'был(а) недавно'}</div>
         </div>
       </div>
-      <button class="tg-header-btn" id="chatMenuBtn" type="button">
+      <button class="tg-header-btn" onclick="toggleChatMenu()" type="button">
         <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
       </button>
       <div class="dropdown" id="chatDropdown">
-        <div class="dropdown-item" data-act="gift"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 00-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>Подарить</div>
-        <div class="dropdown-item" data-act="editAvatar"><svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg>Изменить аватар</div>
-        <div class="dropdown-item" data-act="clear"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>Очистить историю</div>
-        <div class="dropdown-item danger" data-act="close"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>Выйти из чата</div>
+        <div class="dropdown-item" onclick="menuGift()"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 00-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>Подарить</div>
+        <div class="dropdown-item" onclick="menuAvatar()"><svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg>Изменить аватар</div>
+        <div class="dropdown-item" onclick="menuClear()"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>Очистить историю</div>
+        <div class="dropdown-item danger" onclick="menuClose()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>Выйти из чата</div>
       </div>
     </div>
     <div class="messages" id="messagesBox"></div>
@@ -722,12 +717,52 @@ function renderChatArea(){
           <svg viewBox="0 0 24 24"><path d="M16.5 6v11.5a4 4 0 01-8 0V5a2.5 2.5 0 015 0v12a1 1 0 01-2 0V6H10v11a2.5 2.5 0 005 0V5a4 4 0 00-8 0v12.5a5.5 5.5 0 0011 0V6h-1.5z"/></svg>
         </button>
       </div>
-      <button class="mic-btn" id="sendBtn" type="button">
+      <button class="mic-btn" onclick="sendCurrentMessage()" type="button">
         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
     </div>`;
   renderMessages(chat);
 }
+
+function backToList(){
+  app.classList.remove('chat-open');
+  state.activeChatId=null;save();
+  renderChats();renderChatArea();
+}
+window.backToList=backToList;
+
+function toggleChatMenu(){
+  const dd=document.getElementById('chatDropdown');
+  if(dd)dd.classList.toggle('show');
+}
+window.toggleChatMenu=toggleChatMenu;
+
+function menuGift(){
+  const chat=state.chats.find(c=>c.id===state.activeChatId);
+  if(chat)showGiftPicker(chat.id);
+  const dd=document.getElementById('chatDropdown');if(dd)dd.classList.remove('show');
+}
+function menuAvatar(){
+  const chat=state.chats.find(c=>c.id===state.activeChatId);
+  if(chat)pickChatAvatar(chat.id);
+  const dd=document.getElementById('chatDropdown');if(dd)dd.classList.remove('show');
+}
+function menuClear(){
+  const chat=state.chats.find(c=>c.id===state.activeChatId);
+  if(chat&&confirm('Очистить историю?')){chat.messages=[];save();renderMessages(chat);renderChats();}
+  const dd=document.getElementById('chatDropdown');if(dd)dd.classList.remove('show');
+}
+function menuClose(){
+  const chat=state.chats.find(c=>c.id===state.activeChatId);
+  if(chat&&confirm('Выйти из чата?')){
+    state.chats=state.chats.filter(c=>c.id!==chat.id);
+    state.activeChatId=null;save();
+    app.classList.remove('chat-open');
+    renderChats();renderChatArea();
+  }
+  const dd=document.getElementById('chatDropdown');if(dd)dd.classList.remove('show');
+}
+window.menuGift=menuGift;window.menuAvatar=menuAvatar;window.menuClear=menuClear;window.menuClose=menuClose;
 
 function renderMessages(chat){
   const box=document.getElementById('messagesBox');if(!box)return;
@@ -753,7 +788,7 @@ function renderMessages(chat){
       html+=`<div class="msg gift">
         <div class="gift-card-msg" style="background:${m.giftBg}">
           <div class="gift-badge">gift</div>
-          <img class="gift-img" src="${m.giftImg}" alt="" onerror="this.style.display='none'">
+          <img class="gift-img" src="${m.giftImg}" onerror="this.style.display='none'">
           <div class="gift-title">Gift from ${esc(m.out?state.user.name:chat.name)}</div>
           <div class="gift-subtitle">${esc(m.giftName)}</div>
           <div class="gift-attrs">
@@ -773,89 +808,72 @@ function renderMessages(chat){
   box.scrollTop=box.scrollHeight;
 }
 
+/* Прямой обработчик открытия профиля контакта */
+function openContactProfile(){
+  try{
+    const id=state.activeChatId;
+    if(!id){alert('Нет активного чата');return;}
+    const chat=state.chats.find(c=>c.id===id);
+    if(!chat){alert('Чат не найден');return;}
+    if(!chat.gifts)chat.gifts=[];
+
+    const av=chat.photo
+      ?`<div class="big-av"><img src="${chat.photo}"></div>`
+      :`<div class="big-av">${USER_ICON}</div>`;
+    const b=chat.verified?VERIFIED_SVG:'';
+
+    const giftsHtml=chat.gifts.length
+      ?`<div class="gifts-received">${chat.gifts.slice().reverse().map(g=>`
+          <div class="gift-received" style="background:${g.bg}">
+            <img src="${g.img}" onerror="this.style.display='none'">
+            <div class="gift-from">от ${esc(g.from)}</div>
+          </div>`).join('')}</div>`
+      :`<div class="gifts-empty">Пока нет подарков</div>`;
+
+    overlayContent.innerHTML=`
+      <div class="tg-profile">
+        <div class="tg-profile-top">
+          <button class="tg-profile-close" onclick="closeOverlay()">✕</button>
+          ${av}
+          <h2>${esc(chat.name)} ${b}</h2>
+          <div class="sub">был(а) недавно</div>
+        </div>
+        <div class="tg-buttons">
+          <button class="tg-btn" onclick="closeOverlay();openChat('${chat.id}')" type="button">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg><span>Чат</span>
+          </button>
+          <button class="tg-btn" onclick="closeOverlay();showGiftPicker('${chat.id}')" type="button">
+            <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 00-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg><span>Подарить</span>
+          </button>
+          <button class="tg-btn" onclick="closeOverlay();pickChatAvatar('${chat.id}')" type="button">
+            <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg><span>Аватар</span>
+          </button>
+        </div>
+        <div class="tg-info-card">
+          <div class="tg-info-row"><div class="main">${esc(chat.phone||'—')}</div><div class="sub">Телефон</div></div>
+          <div class="tg-info-row"><div class="main">${esc(chat.username||'@user')}</div><div class="sub">Имя пользователя</div></div>
+        </div>
+        <div class="tg-tabs">
+          <button class="tg-tab active">Подарки${chat.gifts.length?' ('+chat.gifts.length+')':''}</button>
+        </div>
+        ${giftsHtml}
+        <div style="padding:0 12px">
+          <button class="modal-btn secondary" onclick="closeOverlay()" type="button">Закрыть</button>
+        </div>
+      </div>`;
+    overlay.classList.add('active');
+  }catch(err){
+    alert('ОШИБКА: '+err.message);
+  }
+}
+window.openContactProfile=openContactProfile;
+window.closeOverlay=closeOverlay;
+
+/* Поиск */
 document.getElementById('searchInput').addEventListener('input',e=>{state.searchQuery=e.target.value.trim();renderChats()});
-function closeOverlay(){overlay.classList.remove('active');overlayContent.innerHTML=''}
 overlay.onclick=e=>{if(e.target===overlay)closeOverlay()};
 
-document.addEventListener('click',function(e){
-  if(e.target.closest('#newChatBtn')){e.preventDefault();showNewChat();return;}
-  if(e.target.closest('#burgerBtn')){e.preventDefault();showMenu();return;}
-  const ci=e.target.closest('.chat-item');
-  if(ci&&ci.dataset.id){openChat(ci.dataset.id);return;}
-  if(e.target.closest('#backBtn')){
-    app.classList.remove('chat-open');
-    state.activeChatId=null;save();
-    renderChats();renderChatArea();
-    return;
-  }
-  if(e.target.closest('#headerPill')){
-    e.preventDefault();
-    e.stopPropagation();
-    try{
-      const chat=state.chats.find(c=>c.id===state.activeChatId);
-      if(chat)showContactProfile(chat.id);
-    }catch(err){alert('Ошибка: '+err.message);}
-    return;
-  }
-  if(e.target.closest('#chatMenuBtn')){
-    e.stopPropagation();
-    const dd=document.getElementById('chatDropdown');
-    if(dd)dd.classList.toggle('show');
-    return;
-  }
-  const di=e.target.closest('.dropdown-item');
-  if(di&&di.dataset.act){
-    const chat=state.chats.find(c=>c.id===state.activeChatId);
-    if(!chat)return;
-    const act=di.dataset.act;
-    const dd=document.getElementById('chatDropdown');
-    if(dd)dd.classList.remove('show');
-    if(act==='gift')showGiftPicker(chat.id);
-    if(act==='editAvatar')pickChatAvatar(chat.id);
-    if(act==='clear'){
-      if(confirm('Очистить историю сообщений?')){
-        chat.messages=[];save();renderMessages(chat);renderChats();
-      }
-    }
-    if(act==='close'){
-      if(confirm('Выйти из чата?')){
-        state.chats=state.chats.filter(c=>c.id!==chat.id);
-        state.activeChatId=null;save();
-        app.classList.remove('chat-open');
-        renderChats();renderChatArea();
-      }
-    }
-    return;
-  }
-  const dd=document.getElementById('chatDropdown');
-  if(dd&&dd.classList.contains('show')&&!e.target.closest('.dropdown')){
-    dd.classList.remove('show');
-  }
-  if(e.target.closest('#sendBtn')){
-    const chat=state.chats.find(c=>c.id===state.activeChatId);
-    if(!chat)return;
-    const input=document.getElementById('msgInput');
-    const text=input.value.trim();if(!text)return;
-    chat.messages.push({text,type:'out',ts:Date.now()});
-    input.value='';input.style.height='auto';
-    save();renderMessages(chat);renderChats();
-  }
-});
-
-document.addEventListener('keydown',e=>{
-  if(e.target&&e.target.id==='msgInput'&&e.key==='Enter'&&!e.shiftKey){
-    e.preventDefault();
-    const btn=document.getElementById('sendBtn');
-    if(btn)btn.click();
-  }
-});
-document.addEventListener('input',e=>{
-  if(e.target&&e.target.id==='msgInput'){
-    e.target.style.height='auto';
-    e.target.style.height=Math.min(e.target.scrollHeight,100)+'px';
-  }
-});
-
+/* Изменить аватар чата */
 function pickChatAvatar(chatId){
   const chat=state.chats.find(c=>c.id===chatId);
   if(!chat)return;
@@ -873,7 +891,9 @@ function pickChatAvatar(chatId){
   };
   inp.click();
 }
+window.pickChatAvatar=pickChatAvatar;
 
+/* Подарок */
 function showGiftPicker(chatId){
   const chat=state.chats.find(c=>c.id===chatId);
   if(!chat)return;
@@ -883,54 +903,40 @@ function showGiftPicker(chatId){
       <div class="gifts-grid">
         ${GIFTS.map(g=>`
           <div class="gift-card" data-gift="${g.id}">
-            <img src="${g.img}" alt="" onerror="this.style.display='none'">
+            <img src="${g.img}" onerror="this.style.display='none'">
             <div class="gift-name">${g.name}</div>
             <div class="gift-price">${g.price}</div>
           </div>
         `).join('')}
       </div>
-      <button class="modal-btn secondary" id="giftCancel" type="button" style="margin-top:16px">Отмена</button>
+      <button class="modal-btn secondary" onclick="closeOverlay()" type="button" style="margin-top:16px">Отмена</button>
     </div>`;
   overlay.classList.add('active');
-  document.getElementById('giftCancel').onclick=closeOverlay;
   overlayContent.querySelectorAll('[data-gift]').forEach(card=>{
     card.onclick=()=>{
       const g=GIFTS.find(x=>x.id===card.dataset.gift);
       if(!g)return;
       if(!chat.gifts)chat.gifts=[];
-      chat.gifts.push({
-        id:g.id,name:g.name,img:g.img,bg:g.bg,
-        model:g.model,backdrop:g.backdrop,symbol:g.symbol,
-        from:state.user.name,ts:Date.now()
-      });
-      chat.messages.push({
-        type:'gift',
-        giftName:g.name,giftImg:g.img,giftBg:g.bg,
-        giftModel:g.model,giftBackdrop:g.backdrop,giftSymbol:g.symbol,
-        out:true,ts:Date.now()
-      });
+      chat.gifts.push({id:g.id,name:g.name,img:g.img,bg:g.bg,model:g.model,backdrop:g.backdrop,symbol:g.symbol,from:state.user.name,ts:Date.now()});
+      chat.messages.push({type:'gift',giftName:g.name,giftImg:g.img,giftBg:g.bg,giftModel:g.model,giftBackdrop:g.backdrop,giftSymbol:g.symbol,out:true,ts:Date.now()});
       save();closeOverlay();
       renderMessages(chat);renderChats();
     };
   });
-  }
+}
+window.showGiftPicker=showGiftPicker;
   function showMenu(){
   overlayContent.innerHTML=`
     <div class="menu">
-      <button class="menu-item" type="button" data-menu="profile"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Профиль</button>
-      <button class="menu-item" type="button" data-menu="admin"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Админ-панель</button>
-      <button class="menu-item danger" type="button" data-menu="logout"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>Выйти</button>
+      <button class="menu-item" onclick="showMyProfile()" type="button"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Профиль</button>
+      <button class="menu-item" onclick="showAdminLogin()" type="button"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Админ-панель</button>
+      <button class="menu-item danger" onclick="doLogout()" type="button"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>Выйти</button>
     </div>`;
   overlay.classList.add('active');
 }
-document.addEventListener('click',e=>{
-  const mi=e.target.closest('[data-menu]');
-  if(!mi)return;
-  const a=mi.dataset.menu;
-  if(a==='profile')showMyProfile();
-  if(a==='admin')showAdminLogin();
-  if(a==='logout'){if(confirm('Выйти?')){localStorage.clear();location.reload()}}
-});
+window.showMenu=showMenu;
+function doLogout(){if(confirm('Выйти?')){localStorage.clear();location.reload()}}
+window.doLogout=doLogout;
 
 function showMyProfile(){
   const u=state.user;
@@ -942,15 +948,15 @@ function showMyProfile(){
   overlayContent.innerHTML=`
     <div class="tg-profile">
       <div class="tg-profile-top">
-        <button class="tg-profile-close" id="pClose" type="button"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+        <button class="tg-profile-close" onclick="closeOverlay()">✕</button>
         ${av}
         <h2>${esc(u.name)} ${u.verified?VERIFIED_SVG:''}</h2>
         <div class="sub">в сети</div>
       </div>
       <div class="tg-buttons">
-        <button class="tg-btn" id="pPhoto" type="button"><svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg><span>Выбрать фото</span></button>
-        <button class="tg-btn" id="pEdit" type="button"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span>Изменить</span></button>
-        <button class="tg-btn" id="pSettings" type="button"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg><span>Настройки</span></button>
+        <button class="tg-btn" onclick="pickPhoto()" type="button"><svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg><span>Выбрать фото</span></button>
+        <button class="tg-btn" onclick="showEditProfile()" type="button"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span>Изменить</span></button>
+        <button class="tg-btn" onclick="showSettings()" type="button"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg><span>Настройки</span></button>
       </div>
       <div class="tg-info-card">
         <div class="tg-info-row"><div class="main">${esc(formatPhone(u.phone))}</div><div class="sub">Телефон</div></div>
@@ -959,14 +965,11 @@ function showMyProfile(){
         <div class="tg-info-row"><div class="main">${u.birthday?fmtDate(u.birthday):'<span style="color:var(--text3)">Добавить</span>'}</div><div class="sub">День рождения</div></div>
         <div class="tg-info-row"><div class="main">${esc(u.id)}</div><div class="sub">ID</div></div>
       </div>
-      <div style="padding:0 12px"><button class="modal-btn secondary" id="pClose2" type="button">Закрыть</button></div>
+      <div style="padding:0 12px"><button class="modal-btn secondary" onclick="closeOverlay()" type="button">Закрыть</button></div>
     </div>`;
-  document.getElementById('pClose').onclick=closeOverlay;
-  document.getElementById('pClose2').onclick=closeOverlay;
-  document.getElementById('pPhoto').onclick=pickPhoto;
-  document.getElementById('pEdit').onclick=showEditProfile;
-  document.getElementById('pSettings').onclick=showSettings;
+  overlay.classList.add('active');
 }
+window.showMyProfile=showMyProfile;
 
 function fmtDate(d){
   const dt=new Date(d);if(isNaN(dt))return d;
@@ -974,7 +977,6 @@ function fmtDate(d){
   const age=new Date().getFullYear()-dt.getFullYear();
   return `${dt.getDate()} ${m[dt.getMonth()]}. ${dt.getFullYear()} (${age} лет)`;
 }
-
 function pickPhoto(){
   const inp=document.createElement('input');
   inp.type='file';inp.accept='image/*';
@@ -990,78 +992,7 @@ function pickPhoto(){
   };
   inp.click();
 }
-
-/* ===== ПРОФИЛЬ КОНТАКТА (Б) с подарками ===== */
-function showContactProfile(chatId){
-  const c=state.chats.find(x=>x.id===chatId);
-  if(!c)return;
-  if(!c.gifts)c.gifts=[];
-
-  const av=c.photo
-    ?`<div class="big-av"><img src="${c.photo}"></div>`
-    :`<div class="big-av">${USER_ICON}</div>`;
-  const b=c.verified?VERIFIED_SVG:'';
-
-  const giftsHtml=c.gifts.length
-    ?`<div class="gifts-received">
-        ${c.gifts.slice().reverse().map(g=>`
-          <div class="gift-received" style="background:${g.bg}">
-            <img src="${g.img}" alt="" onerror="this.style.display='none'">
-            <div class="gift-from">от ${esc(g.from)}</div>
-          </div>
-        `).join('')}
-      </div>`
-    :`<div class="gifts-empty">Пока нет подарков</div>`;
-
-  const infoHtml=`<div class="tg-info-card" style="margin:0 12px 12px">
-      <div class="tg-info-row"><div class="main">${esc(c.phone||'+7 (937) 530-79-00')}</div><div class="sub">Телефон</div></div>
-      <div class="tg-info-row"><div class="main">${c.bio?esc(c.bio):'<span style="color:var(--text3)">—</span>'}</div><div class="sub">О себе</div></div>
-      <div class="tg-info-row"><div class="main">${esc(c.username||'@user')}</div><div class="sub">Имя пользователя</div></div>
-      <div class="tg-info-row"><div class="main">${esc(c.birthday?fmtDate(c.birthday):'—')}</div><div class="sub">День рождения</div></div>
-      <div class="tg-info-row"><div class="main">${esc(String(c.id).replace(/\D/g,'').slice(-9)||'000000000')}</div><div class="sub">ID</div></div>
-    </div>`;
-
-  overlayContent.innerHTML=`
-    <div class="tg-profile">
-      <div class="tg-profile-top">
-        <button class="tg-profile-close" id="cClose" type="button"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-        ${av}
-        <h2>${esc(c.name)} ${b}</h2>
-        <div class="sub">был(а) недавно</div>
-      </div>
-      <div class="tg-buttons">
-        <button class="tg-btn" id="cChatBtn" type="button"><svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg><span>Чат</span></button>
-        <button class="tg-btn" id="cGiftBtn" type="button"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 00-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg><span>Подарить</span></button>
-        <button class="tg-btn" id="cAvatarBtn" type="button"><svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg><span>Аватар</span></button>
-        <button class="tg-btn" id="cVideoBtn" type="button"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1v-3.5l4 4v-11l-4 4z"/></svg><span>Видео</span></button>
-      </div>
-      <div class="tg-tabs">
-        <button class="tg-tab" data-tab="info" type="button">Информация</button>
-        <button class="tg-tab active" data-tab="gifts" type="button">Подарки${c.gifts.length?' ('+c.gifts.length+')':''}</button>
-      </div>
-      <div id="tabContent">${giftsHtml}</div>
-      <div style="padding:0 12px"><button class="modal-btn secondary" id="cClose2" type="button">Закрыть</button></div>
-    </div>`;
-
-  document.getElementById('cClose').onclick=closeOverlay;
-  document.getElementById('cClose2').onclick=closeOverlay;
-  document.getElementById('cChatBtn').onclick=()=>{closeOverlay();openChat(chatId)};
-  document.getElementById('cGiftBtn').onclick=()=>{closeOverlay();showGiftPicker(chatId)};
-  document.getElementById('cAvatarBtn').onclick=()=>{closeOverlay();pickChatAvatar(chatId)};
-
-  overlayContent.querySelectorAll('.tg-tab').forEach(tab=>{
-    tab.onclick=()=>{
-      overlayContent.querySelectorAll('.tg-tab').forEach(t=>t.classList.remove('active'));
-      tab.classList.add('active');
-      const tc=document.getElementById('tabContent');
-      if(tab.dataset.tab==='gifts'){
-        tc.innerHTML=giftsHtml;
-      } else {
-        tc.innerHTML=infoHtml;
-      }
-    };
-  });
-}
+window.pickPhoto=pickPhoto;
 
 function showEditProfile(){
   const u=state.user;
@@ -1074,18 +1005,20 @@ function showEditProfile(){
       <input type="text" id="edBio" value="${esc(u.bio||'')}" maxlength="70">
       <label>День рождения</label>
       <input type="date" id="edBday" value="${u.birthday||''}">
-      <button class="modal-btn" id="edSave" type="button">Сохранить</button>
-      <button class="modal-btn secondary" id="edCancel" type="button">Отмена</button>
+      <button class="modal-btn" onclick="saveEditProfile()" type="button">Сохранить</button>
+      <button class="modal-btn secondary" onclick="closeOverlay()" type="button">Отмена</button>
     </div>`;
-  document.getElementById('edCancel').onclick=closeOverlay;
-  document.getElementById('edSave').onclick=()=>{
-    state.user.name=document.getElementById('edName').value.trim()||state.user.name;
-    state.user.bio=document.getElementById('edBio').value.trim();
-    state.user.birthday=document.getElementById('edBday').value;
-    save();renderChats();renderChatArea();
-    closeOverlay();showMyProfile();
-  };
+  overlay.classList.add('active');
 }
+window.showEditProfile=showEditProfile;
+function saveEditProfile(){
+  state.user.name=document.getElementById('edName').value.trim()||state.user.name;
+  state.user.bio=document.getElementById('edBio').value.trim();
+  state.user.birthday=document.getElementById('edBday').value;
+  save();renderChats();renderChatArea();
+  closeOverlay();showMyProfile();
+}
+window.saveEditProfile=saveEditProfile;
 
 function showSettings(){
   const u=state.user;
@@ -1098,35 +1031,38 @@ function showSettings(){
       <input type="text" id="setUser" value="${esc(u.username)}" maxlength="24">
       <div class="theme-switch">
         <span>Тёмная тема</span>
-        <div class="switch ${state.theme==='dark'?'on':''}" id="themeSw"></div>
+        <div class="switch ${state.theme==='dark'?'on':''}" onclick="toggleTheme(this)"></div>
       </div>
-      <button class="modal-btn" id="setSave" type="button">Сохранить</button>
-      <button class="modal-btn secondary" id="setCancel" type="button">Отмена</button>
+      <button class="modal-btn" onclick="saveSettings()" type="button">Сохранить</button>
+      <button class="modal-btn secondary" onclick="closeOverlay()" type="button">Отмена</button>
     </div>`;
-  document.getElementById('themeSw').onclick=function(){
-    state.theme=state.theme==='dark'?'light':'dark';
-    applyTheme();save();
-    this.classList.toggle('on',state.theme==='dark');
-  };
-  document.getElementById('setCancel').onclick=closeOverlay;
-  document.getElementById('setSave').onclick=()=>{
-    const name=document.getElementById('setName').value.trim();
-    let un=document.getElementById('setUser').value.trim();
-    if(!un.startsWith('@'))un='@'+un.replace(/@/g,'');
-    if(!name){alert('Введите имя');return}
-    if(!/^@[a-zA-Z0-9_]{5,}$/.test(un)){alert('Username: латиница, цифры, _, мин 5');return}
-    state.user.name=name;state.user.username=un;
-    save();renderChats();renderChatArea();
-    closeOverlay();showMyProfile();
-  };
+  overlay.classList.add('active');
 }
+window.showSettings=showSettings;
+function toggleTheme(el){
+  state.theme=state.theme==='dark'?'light':'dark';
+  applyTheme();save();
+  el.classList.toggle('on',state.theme==='dark');
+}
+window.toggleTheme=toggleTheme;
+function saveSettings(){
+  const name=document.getElementById('setName').value.trim();
+  let un=document.getElementById('setUser').value.trim();
+  if(!un.startsWith('@'))un='@'+un.replace(/@/g,'');
+  if(!name){alert('Введите имя');return}
+  if(!/^@[a-zA-Z0-9_]{5,}$/.test(un)){alert('Username: латиница, цифры, _, мин 5');return}
+  state.user.name=name;state.user.username=un;
+  save();renderChats();renderChatArea();
+  closeOverlay();showMyProfile();
+}
+window.saveSettings=saveSettings;
 
 function showNewChat(){
   let ncPhoto=null;
   overlayContent.innerHTML=`
     <div class="modal">
       <h3>Новый чат</h3>
-      <div class="nc-photo" id="ncPhotoBox">
+      <div class="nc-photo" id="ncPhotoBox" onclick="document.getElementById('ncPhotoInput').click()">
         <svg class="cam" viewBox="0 0 24 24"><path d="M9 2L7.17 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-3.17L15 2H9zm3 15a5 5 0 110-10 5 5 0 010 10z"/></svg>
       </div>
       <input type="file" id="ncPhotoInput" accept="image/*" style="display:none">
@@ -1135,87 +1071,86 @@ function showNewChat(){
       <input type="text" id="ncName" placeholder="Иван" maxlength="30">
       <label>@username</label>
       <input type="text" id="ncUser" placeholder="@ivan" maxlength="24">
-      <button class="modal-btn" id="ncCreate" type="button">Создать чат</button>
-      <button class="modal-btn secondary" id="ncCancel" type="button">Отмена</button>
+      <button class="modal-btn" onclick="createNewChat()" type="button">Создать чат</button>
+      <button class="modal-btn secondary" onclick="closeOverlay()" type="button">Отмена</button>
     </div>`;
   overlay.classList.add('active');
+  window._ncPhoto=null;
   const inp=document.getElementById('ncName');inp.focus();
-  document.getElementById('ncCancel').onclick=closeOverlay;
-  const photoBox=document.getElementById('ncPhotoBox');
-  const photoInput=document.getElementById('ncPhotoInput');
-  photoBox.onclick=()=>photoInput.click();
-  photoInput.onchange=e=>{
+  document.getElementById('ncPhotoInput').onchange=e=>{
     const f=e.target.files[0];if(!f)return;
     const r=new FileReader();
     r.onload=ev=>{
-      ncPhoto=ev.target.result;
-      photoBox.innerHTML=`<img src="${ncPhoto}"><div class="badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>`;
+      window._ncPhoto=ev.target.result;
+      document.getElementById('ncPhotoBox').innerHTML=`<img src="${window._ncPhoto}"><div class="badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>`;
     };
     r.readAsDataURL(f);
   };
-  const create=()=>{
-    const name=document.getElementById('ncName').value.trim();
-    let un=document.getElementById('ncUser').value.trim();
-    if(!name){alert('Введите имя');return}
-    if(!un)un='@user'+Math.floor(Math.random()*9999);
-    if(!un.startsWith('@'))un='@'+un.replace(/@/g,'');
-    const chat={
-      id:'chat_'+Date.now()+Math.floor(Math.random()*1000),
-      name,username:un,photo:ncPhoto,messages:[],
-      isSaved:false,verified:false,gifts:[],
-      phone:'+7 (937) '+Math.floor(100+Math.random()*899)+'-'+Math.floor(10+Math.random()*89)+'-'+Math.floor(10+Math.random()*89),
-      bio:'',birthday:''
-    };
-    state.chats.push(chat);
-    state.activeChatId=chat.id;
-    save();closeOverlay();
-    app.classList.add('chat-open');
-    renderChats();renderChatArea();
-  };
-  document.getElementById('ncCreate').onclick=create;
-  document.getElementById('ncUser').addEventListener('keydown',e=>{if(e.key==='Enter')create()});
-  document.getElementById('ncName').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('ncUser').focus()});
 }
+window.showNewChat=showNewChat;
+function createNewChat(){
+  const name=document.getElementById('ncName').value.trim();
+  let un=document.getElementById('ncUser').value.trim();
+  if(!name){alert('Введите имя');return}
+  if(!un)un='@user'+Math.floor(Math.random()*9999);
+  if(!un.startsWith('@'))un='@'+un.replace(/@/g,'');
+  const chat={
+    id:'chat_'+Date.now()+Math.floor(Math.random()*1000),
+    name,username:un,photo:window._ncPhoto||null,messages:[],
+    isSaved:false,verified:false,gifts:[],
+    phone:'+7 (937) '+Math.floor(100+Math.random()*899)+'-'+Math.floor(10+Math.random()*89)+'-'+Math.floor(10+Math.random()*89),
+    bio:'',birthday:''
+  };
+  state.chats.push(chat);
+  state.activeChatId=chat.id;
+  save();closeOverlay();
+  app.classList.add('chat-open');
+  renderChats();renderChatArea();
+}
+window.createNewChat=createNewChat;
 
 function showAdminLogin(){
   overlayContent.innerHTML=`
     <div class="modal">
       <h3>🔐 Админ-панель</h3>
       <input type="password" id="adminPass" placeholder="Пароль">
-      <button class="modal-btn" id="adminLoginBtn" type="button">Войти</button>
-      <button class="modal-btn secondary" id="adminCancelBtn" type="button">Отмена</button>
+      <button class="modal-btn" onclick="adminLogin()" type="button">Войти</button>
+      <button class="modal-btn secondary" onclick="closeOverlay()" type="button">Отмена</button>
       <div class="modal-status" id="adminStatus"></div>
     </div>`;
-  const inp=document.getElementById('adminPass');inp.focus();
-  const st=document.getElementById('adminStatus');
-  const login=()=>{
-    if(inp.value===ADMIN_PASS){st.className='modal-status ok';st.textContent='✓ Доступ разрешён';setTimeout(showAdminPanel,350)}
-    else{st.className='modal-status err';st.textContent='✗ Неверный пароль';inp.value=''}
-  };
-  document.getElementById('adminLoginBtn').onclick=login;
-  inp.addEventListener('keydown',e=>{if(e.key==='Enter')login()});
-  document.getElementById('adminCancelBtn').onclick=closeOverlay;
+  overlay.classList.add('active');
+  document.getElementById('adminPass').focus();
 }
+window.showAdminLogin=showAdminLogin;
+function adminLogin(){
+  const inp=document.getElementById('adminPass');
+  const st=document.getElementById('adminStatus');
+  if(inp.value===ADMIN_PASS){st.className='modal-status ok';st.textContent='✓ Доступ разрешён';setTimeout(showAdminPanel,350)}
+  else{st.className='modal-status err';st.textContent='✗ Неверный пароль';inp.value=''}
+}
+window.adminLogin=adminLogin;
 
 function showAdminPanel(){
   overlayContent.innerHTML=`
     <div class="modal">
       <h3>👑 Админ-панель</h3>
       <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Аккаунт: <b>${esc(state.user.name)}</b> ${esc(state.user.username)}</p>
-      <button class="modal-btn ${state.user.verified?'danger':''}" id="toggleVerify" type="button">${state.user.verified?'Убрать галочку':'Выдать синюю галочку ✓'}</button>
-      <button class="modal-btn secondary" id="closeAdmin" type="button">Закрыть</button>
+      <button class="modal-btn ${state.user.verified?'danger':''}" onclick="toggleVerify()" type="button">${state.user.verified?'Убрать галочку':'Выдать синюю галочку ✓'}</button>
+      <button class="modal-btn secondary" onclick="closeOverlay()" type="button">Закрыть</button>
       <div class="modal-status" id="adminStatus2"></div>
     </div>`;
-  document.getElementById('toggleVerify').onclick=()=>{
-    state.user.verified=!state.user.verified;save();
-    renderChats();renderChatArea();
-    const st=document.getElementById('adminStatus2');
-    st.className='modal-status ok';
-    st.textContent=state.user.verified?'✓ Галочка выдана!':'✓ Галочка снята';
-    setTimeout(showAdminPanel,500);
-  };
-  document.getElementById('closeAdmin').onclick=closeOverlay;
+  overlay.classList.add('active');
 }
+window.showAdminPanel=showAdminPanel;
+function toggleVerify(){
+  state.user.verified=!state.user.verified;save();
+  renderChats();renderChatArea();
+  const st=document.getElementById('adminStatus2');
+  st.className='modal-status ok';
+  st.textContent=state.user.verified?'✓ Галочка выдана!':'✓ Галочка снята';
+  setTimeout(showAdminPanel,500);
+}
+window.toggleVerify=toggleVerify;
 </script>
 </body>
 </html>
